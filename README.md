@@ -1,0 +1,2 @@
+# TRENDS CONFIG #
+
