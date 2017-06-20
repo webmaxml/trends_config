@@ -1,0 +1,11 @@
+.select2-dropdown.increasedzindexclass {
+  z-index: 9999999;
+}
+.config__url-link {
+	color: #5151cc;
+	text-decoration: underline;
+}
+.config__url-link:hover {
+	color: #30307a;
+	text-decoration: none;
+}

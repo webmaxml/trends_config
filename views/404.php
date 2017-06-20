@@ -1,0 +1,1 @@
+<h1 style="color: red; text-align: center; font-size: 30px; margin-top: 50px;">Такой страницы не существует!</h1>
