@@ -1,7 +1,6 @@
 <?php 
-// if site is not connected = false
-// if connected but has no upsells = ''
-if ( $config_data ) {
+
+if ( is_array( $config_data->upsells ) ) {
 
 	// checking if upsells are on
 	if ( $isIndex && $config_data->upsell_index === 'on' ||

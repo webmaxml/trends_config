@@ -288,6 +288,177 @@ $( function() {
 	}
 	// END LAND-UPDATE
 
+	// BEGIN TEST-UPDATE
+	if ( document.getElementById( 'testConfigForm' ) ) {
+		(function(){
+
+			var $form = $( '#testConfigForm' );
+			var $configButtons = $( '.test__config-btn' );
+			var testToggles = Array.prototype.slice.call( document.querySelectorAll( '.test__toggle' ) );
+			var $deleteButton = $( '#deleteTestBtn' );
+
+			testToggles.forEach( function( elem ) {
+				var switchery = new Switchery( elem );
+
+				$( elem ).on( 'change', switchery , function( e ) {
+					var switcher = e.data;
+					switcher.disable();
+					
+					var landId = $( this ).data( 'land-id' );
+					var value = this.checked;
+
+					$.ajax({
+						method: 'get',
+						url: globalData.ajaxUrl + '/land-test-toggle',
+						dataType: 'json',
+						data: {
+							id: landId,
+							value: value
+						},
+						success: function( data, status, xhr ) {
+							switcher.enable();
+
+							if ( data.success ) {
+								var text, type;
+								if ( data.data === 'true' ) {
+									text = 'Тест успешно включен';
+									type = 'success';
+								} else if ( data.data === 'false' ) {
+									text = 'Тест успешно выключен';
+									type = '';
+								}
+
+								new PNotify({
+									title: 'Успешно обновлен!',
+									text: text,
+									type: type,
+									styling: 'bootstrap3'
+								});	
+							} else {
+								new PNotify({
+									title: 'Ошибка',
+									text: 'Тест по какой-то причине не был обновлен!',
+									type: 'error',
+									styling: 'bootstrap3'
+								});	
+							}
+						},
+						error: function( xhr, status, error ) {
+							switcher.enable();
+							new PNotify({
+								title: 'Ошибка',
+								text: error,
+								type: 'error',
+								styling: 'bootstrap3'
+							});	
+						}
+					});
+				} )
+			});
+
+			$configButtons.on( 'click', function( e ) {
+				var landId = $( this ).data( 'land-id' );
+
+				$.ajax({
+					method: 'get',
+					url: globalData.ajaxUrl + '/land-data',
+					dataType: 'json',
+					data: {
+						id: landId
+					},
+					success: function( data, status, xhr ) {
+						$( '#landConfigTitle' ).text( 'Редактировать тест ' + data.name );
+						$( '#landId3' ).val( data.id );
+						$deleteButton.data( 'land-id', data.id );
+
+						if ( Array.isArray( data.redirections ) ) {
+							$( '#testRedirects2' ).val( data.redirections ).trigger('change.select2');
+						} else {
+							$( '#testRedirects2' ).val( '' ).trigger('change.select2');
+						}
+					},
+					error: function( xhr, status, error ) {
+						new PNotify({
+							title: 'Ошибка',
+							text: error,
+							type: 'error',
+							styling: 'bootstrap3'
+						});	
+					}
+				});
+
+			} );
+
+			$form.on( 'submit', function( e ) {
+				e.preventDefault();
+
+				var $configForm = $( this );
+
+				$.ajax({
+					method: 'get',
+					url: globalData.ajaxUrl + '/test-update',
+					dataType: 'json',
+					data: $configForm.serialize(),
+					success: function( data, status, xhr ) {
+						if ( data.success ) {
+							document.location.reload( true );
+						} else {
+							new PNotify({
+								title: 'Ошибка',
+								text: 'Тест по какой-то причине не был обновлен!',
+								type: 'error',
+								styling: 'bootstrap3'
+							});	
+						}
+					},
+					error: function( xhr, status, error ) {
+						new PNotify({
+							title: 'Ошибка',
+							text: error,
+							type: 'error',
+							styling: 'bootstrap3'
+						});	
+					}
+				});
+
+			});
+
+			$deleteButton.on( 'click', function( e ) {
+				e.preventDefault();
+				var landId = $( this ).data( 'land-id' );
+
+				$.ajax({
+					method: 'get',
+					url: globalData.ajaxUrl + '/test-update',
+					dataType: 'json',
+					data: { entry: landId },
+					success: function( data, status, xhr ) {
+						if ( data.success ) {
+							document.location.reload( true );
+						} else {
+							new PNotify({
+								title: 'Ошибка',
+								text: 'Тест по какой-то причине не был удален!',
+								type: 'error',
+								styling: 'bootstrap3'
+							});	
+						}
+					},
+					error: function( xhr, status, error ) {
+						new PNotify({
+							title: 'Ошибка',
+							text: error,
+							type: 'error',
+							styling: 'bootstrap3'
+						});	
+					}
+				});
+			} );
+
+		}());
+	}
+	// END TEST-UPDATE
+
 	// BEGIN IMAGE_DELETE
 	if ( document.getElementsByClassName( 'image__item' ).length > 0 ) {
 		(function(){
@@ -413,5 +584,27 @@ $( function() {
 		}());
 	}
 	// END SELECT-LAND-UPSELLS
+
+	// BEGIN SELECT-TEST-REDIRECTS
+	if ( document.getElementById( 'testRedirects' ) ) {
+		(function(){
+
+        $("#testRedirects").select2({
+          placeholder: "Направления",
+          // allowClear: true,
+          dropdownCssClass: "increasedzindexclass",
+          width: 'resolve'
+        });
+
+        $("#testRedirects2").select2({
+          placeholder: "Направления",
+          // allowClear: true,
+          dropdownCssClass: "increasedzindexclass",
+          width: 'resolve'
+        });
+
+		}());
+	}
+	// END SELECT-TEST-REDIRECTS
 
 } );

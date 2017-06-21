@@ -71,6 +71,33 @@ class ApiController {
 		die();
 	}
 
+	public function toggleLandTest() {
+		$values = array();
+
+		$values[ 'ab_test' ] = $_GET[ 'value' ] === 'true' ? 'on' : 'off';
+
+		$result = $this->lands->update( $_GET[ 'id' ], $values );
+		$result === false ? false : true;
+
+		echo json_encode( array( 'success' => $result, 'data' => $_GET[ 'value' ] ) );
+		die();
+	}
+
+	public function updateTest() {
+		$values = array();
+		$values[ 'redirections' ] = isset( $_GET[ 'redirects' ] ) ? $_GET[ 'redirects' ] : '';
+
+		if ( !$_GET[ 'redirects' ] ) {
+			$values[ 'ab_test' ] = 'off';
+		}
+		
+		$result = $this->lands->update( $_GET[ 'entry' ], $values );
+		$result === false ? false : true;
+
+		echo json_encode( array( 'success' => $result ) );
+		die();
+	}
+
 	public function getUpsellData() {
 		$data = $this->upsells->getDataById( $_GET[ 'id' ] );
 
@@ -111,8 +138,8 @@ class ApiController {
 		die();
 	}
 
-	public function getLandUpsells() {
-		$result = $this->lands->getUpsellsByUrl( $_GET[ 'host' ] );
+	public function getLandOutsourceData() {
+		$result = $this->lands->getOutsourceData( $_GET[ 'host' ] );
 
 		echo json_encode( $result );
 		die();

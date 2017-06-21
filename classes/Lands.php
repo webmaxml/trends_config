@@ -26,7 +26,9 @@ class Lands {
 			'upsells' => '',
 			'upsell_hit' => '',
 			'upsell_index' => 'on',
-			'upsell_thanks' => 'on'
+			'upsell_thanks' => 'on',
+			'ab_test' => 'off',
+			'redirections' => '',
 		) );
 	}
 
@@ -55,35 +57,67 @@ class Lands {
 		return $this->db->delete( 'lands', $id );
 	}
 
-	public function getUpsellsByUrl( $url ) {
+	public function getOutsourceData( $url ) {
 		require 'data/lands.php';
 
 		foreach( $content as $land ) {
 			if ( $land[ 'url' ] === $url ) {
 
-				if ( $land[ 'upsells' ] === '' ) { return ''; }
-
 				$data = array(
 					'hit' => $land[ 'upsell_hit' ],
 					'upsell_index' => $land[ 'upsell_index' ],
-					'upsell_thanks' => $land[ 'upsell_thanks' ]
+					'upsell_thanks' => $land[ 'upsell_thanks' ],
+					'ab_test' => $land[ 'ab_test' ]
 				);
-				
-				$upsells = array();
-				foreach ( $land[ 'upsells' ] as $upsellId ) {
-					$upsell = $this->upsells->getDataById( $upsellId );
-					$upsell[ 'image' ] = $this->images->getUrlById( $upsell[ 'image' ] );
 
-					$upsells[] = $upsell;
+				// upsells
+				if ( is_array( $land[ 'upsells' ] ) ) { 
+					$upsells = array();
+					foreach ( $land[ 'upsells' ] as $upsellId ) {
+						$upsell = $this->upsells->getDataById( $upsellId );
+						$upsell[ 'image' ] = $this->images->getUrlById( $upsell[ 'image' ] );
+
+						$upsells[] = $upsell;
+					}
+
+					$data[ 'upsells' ] = $upsells;
+				} else {
+					$data[ 'upsells' ] = $land[ 'upsells' ];
 				}
 
-				$data[ 'upsells' ] = $upsells;
+				// redirections
+				if ( is_array( $land[ 'redirections' ] ) ) { 
+					$redirections = array();
+					foreach ( $land[ 'redirections' ] as $redirectId ) {
+						$redirect = $this->getDataById( $redirectId );
+						if ( $redirect ) {
+							$redirections[] = $redirect[ 'url' ];
+						}
+					}
 
+					$data[ 'redirections' ] = $redirections;
+				} else {
+					$data[ 'redirections' ] = $land[ 'redirections' ];
+				}
+			
 				return $data;
 			}
 		}
 
 		return false;
+	}
+
+	public function getTestLands() {
+		require 'data/lands.php';
+
+		$test_lands = array();
+		foreach ( $content as $land ) {
+			if ( is_array( $land[ 'redirections' ] ) ) {
+				$test_lands[] = $land;
+			}
+		}
+
+		return $test_lands;
 	}
 
 }

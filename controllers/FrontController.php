@@ -52,6 +52,14 @@ class FrontController {
 		}
 	}
 
+	public function getAbtest() {
+		if ( $this->user->isLogged() ) {
+			require 'views/abtest.php';
+		} else {
+			require 'views/login.php';
+		}
+	}
+
 	public function loginUser() {
 		global $config;
 
@@ -112,6 +120,21 @@ class FrontController {
 			exit;
 		} else {
 			header( "Location: " . $config[ 'base_url' ] . '/upsells?upsell_status=1' );
+			exit;
+		} 
+	}
+
+	public function createTest() {
+		$values = array();
+		$values[ 'redirections' ] = $_POST[ 'redirects' ];
+		
+		$result = $this->lands->update( $_POST[ 'entry' ], $values );
+
+		if ( $result === false ) {
+			header( "Location: " . $config[ 'base_url' ] . '/abtest?test_status=2' );
+			exit;
+		} else {
+			header( "Location: " . $config[ 'base_url' ] . '/abtest?test_status=1' );
 			exit;
 		} 
 	}

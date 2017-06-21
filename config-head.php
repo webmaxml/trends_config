@@ -12,6 +12,6 @@ if ( isset( $config_data->upsells ) && count( $config_data->upsells) === 2 && $i
 	        margin-right: 130px !important;
 	    }
 	}
-</style>>
+</style>
 
 <?php } ?>

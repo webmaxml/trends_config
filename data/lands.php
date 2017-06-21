@@ -11,6 +11,8 @@ $content = array(
 'upsell_hit'=>'4',
 'upsell_index'=>'off',
 'upsell_thanks'=>'on',
+'ab_test'=>'off',
+'redirections'=>'',
 ],
 [
 'id'=>'57',
@@ -24,6 +26,8 @@ $content = array(
 'upsell_hit'=>'22',
 'upsell_index'=>'on',
 'upsell_thanks'=>'on',
+'ab_test'=>'off',
+'redirections'=>'',
 ],
 [
 'id'=>'58',
@@ -36,20 +40,23 @@ $content = array(
 'upsell_hit'=>'27',
 'upsell_index'=>'on',
 'upsell_thanks'=>'on',
+'ab_test'=>'off',
+'redirections'=>'',
 ],
 [
 'id'=>'59',
 'name'=>'cobra',
 'url'=>'http://cobra.all-trends.top/',
 'upsells'=>[
-'19',
-'22',
+'29',
 '32',
 '37',
 ],
-'upsell_hit'=>'22',
+'upsell_hit'=>'37',
 'upsell_index'=>'on',
 'upsell_thanks'=>'on',
+'ab_test'=>'off',
+'redirections'=>'',
 ],
 [
 'id'=>'60',
@@ -63,6 +70,8 @@ $content = array(
 'upsell_hit'=>'30',
 'upsell_index'=>'on',
 'upsell_thanks'=>'on',
+'ab_test'=>'off',
+'redirections'=>'',
 ],
 [
 'id'=>'61',
@@ -75,6 +84,8 @@ $content = array(
 'upsell_hit'=>'30',
 'upsell_index'=>'on',
 'upsell_thanks'=>'on',
+'ab_test'=>'off',
+'redirections'=>'',
 ],
 [
 'id'=>'62',
@@ -88,6 +99,8 @@ $content = array(
 'upsell_hit'=>'22',
 'upsell_index'=>'on',
 'upsell_thanks'=>'on',
+'ab_test'=>'off',
+'redirections'=>'',
 ],
 [
 'id'=>'63',
@@ -101,6 +114,8 @@ $content = array(
 'upsell_hit'=>'19',
 'upsell_index'=>'on',
 'upsell_thanks'=>'on',
+'ab_test'=>'off',
+'redirections'=>'',
 ],
 [
 'id'=>'64',
@@ -114,6 +129,8 @@ $content = array(
 'upsell_hit'=>'4',
 'upsell_index'=>'off',
 'upsell_thanks'=>'on',
+'ab_test'=>'off',
+'redirections'=>'',
 ],
 [
 'id'=>'65',
@@ -127,6 +144,8 @@ $content = array(
 'upsell_hit'=>'4',
 'upsell_index'=>'off',
 'upsell_thanks'=>'on',
+'ab_test'=>'off',
+'redirections'=>'',
 ],
 [
 'id'=>'66',
@@ -140,6 +159,8 @@ $content = array(
 'upsell_hit'=>'4',
 'upsell_index'=>'off',
 'upsell_thanks'=>'on',
+'ab_test'=>'off',
+'redirections'=>'',
 ],
 [
 'id'=>'67',
@@ -152,6 +173,8 @@ $content = array(
 'upsell_hit'=>'4',
 'upsell_index'=>'on',
 'upsell_thanks'=>'on',
+'ab_test'=>'off',
+'redirections'=>'',
 ],
 [
 'id'=>'68',
@@ -165,6 +188,8 @@ $content = array(
 'upsell_hit'=>'22',
 'upsell_index'=>'on',
 'upsell_thanks'=>'on',
+'ab_test'=>'off',
+'redirections'=>'',
 ],
 [
 'id'=>'69',
@@ -178,6 +203,8 @@ $content = array(
 'upsell_hit'=>'27',
 'upsell_index'=>'off',
 'upsell_thanks'=>'on',
+'ab_test'=>'off',
+'redirections'=>'',
 ],
 [
 'id'=>'70',
@@ -191,6 +218,8 @@ $content = array(
 'upsell_hit'=>'27',
 'upsell_index'=>'off',
 'upsell_thanks'=>'on',
+'ab_test'=>'off',
+'redirections'=>'',
 ],
 [
 'id'=>'71',
@@ -204,6 +233,8 @@ $content = array(
 'upsell_hit'=>'27',
 'upsell_index'=>'off',
 'upsell_thanks'=>'on',
+'ab_test'=>'off',
+'redirections'=>'',
 ],
 [
 'id'=>'72',
@@ -217,6 +248,8 @@ $content = array(
 'upsell_hit'=>'40',
 'upsell_index'=>'on',
 'upsell_thanks'=>'on',
+'ab_test'=>'off',
+'redirections'=>'',
 ],
 [
 'id'=>'73',
@@ -230,6 +263,8 @@ $content = array(
 'upsell_hit'=>'37',
 'upsell_index'=>'on',
 'upsell_thanks'=>'on',
+'ab_test'=>'off',
+'redirections'=>'',
 ],
 [
 'id'=>'74',
@@ -243,6 +278,8 @@ $content = array(
 'upsell_hit'=>'40',
 'upsell_index'=>'on',
 'upsell_thanks'=>'on',
+'ab_test'=>'off',
+'redirections'=>'',
 ],
 [
 'id'=>'75',
@@ -256,6 +293,8 @@ $content = array(
 'upsell_hit'=>'22',
 'upsell_index'=>'on',
 'upsell_thanks'=>'on',
+'ab_test'=>'off',
+'redirections'=>'',
 ],
 [
 'id'=>'76',
@@ -269,6 +308,8 @@ $content = array(
 'upsell_hit'=>'27',
 'upsell_index'=>'on',
 'upsell_thanks'=>'on',
+'ab_test'=>'off',
+'redirections'=>'',
 ],
 [
 'id'=>'77',
@@ -283,6 +324,8 @@ $content = array(
 'upsell_hit'=>'27',
 'upsell_index'=>'on',
 'upsell_thanks'=>'on',
+'ab_test'=>'off',
+'redirections'=>'',
 ],
 [
 'id'=>'78',
@@ -297,6 +340,8 @@ $content = array(
 'upsell_hit'=>'22',
 'upsell_index'=>'on',
 'upsell_thanks'=>'on',
+'ab_test'=>'off',
+'redirections'=>'',
 ],
 [
 'id'=>'79',
@@ -310,6 +355,8 @@ $content = array(
 'upsell_hit'=>'37',
 'upsell_index'=>'on',
 'upsell_thanks'=>'on',
+'ab_test'=>'off',
+'redirections'=>'',
 ],
 [
 'id'=>'80',
@@ -319,6 +366,8 @@ $content = array(
 'upsell_hit'=>'',
 'upsell_index'=>'off',
 'upsell_thanks'=>'off',
+'ab_test'=>'off',
+'redirections'=>'',
 ],
 [
 'id'=>'81',
@@ -328,6 +377,8 @@ $content = array(
 'upsell_hit'=>'',
 'upsell_index'=>'off',
 'upsell_thanks'=>'off',
+'ab_test'=>'off',
+'redirections'=>'',
 ],
 [
 'id'=>'82',
@@ -337,6 +388,8 @@ $content = array(
 'upsell_hit'=>'',
 'upsell_index'=>'off',
 'upsell_thanks'=>'off',
+'ab_test'=>'off',
+'redirections'=>'',
 ],
 [
 'id'=>'83',
@@ -346,6 +399,8 @@ $content = array(
 'upsell_hit'=>'',
 'upsell_index'=>'off',
 'upsell_thanks'=>'off',
+'ab_test'=>'off',
+'redirections'=>'',
 ],
 [
 'id'=>'84',
@@ -359,6 +414,8 @@ $content = array(
 'upsell_hit'=>'27',
 'upsell_index'=>'on',
 'upsell_thanks'=>'on',
+'ab_test'=>'off',
+'redirections'=>'',
 ],
 [
 'id'=>'85',
@@ -368,6 +425,8 @@ $content = array(
 'upsell_hit'=>'',
 'upsell_index'=>'off',
 'upsell_thanks'=>'off',
+'ab_test'=>'off',
+'redirections'=>'',
 ],
 [
 'id'=>'86',
@@ -377,6 +436,8 @@ $content = array(
 'upsell_hit'=>'',
 'upsell_index'=>'off',
 'upsell_thanks'=>'off',
+'ab_test'=>'off',
+'redirections'=>'',
 ],
 [
 'id'=>'87',
@@ -386,6 +447,8 @@ $content = array(
 'upsell_hit'=>'',
 'upsell_index'=>'off',
 'upsell_thanks'=>'off',
+'ab_test'=>'off',
+'redirections'=>'',
 ],
 [
 'id'=>'88',
@@ -395,6 +458,8 @@ $content = array(
 'upsell_hit'=>'',
 'upsell_index'=>'off',
 'upsell_thanks'=>'off',
+'ab_test'=>'off',
+'redirections'=>'',
 ],
 [
 'id'=>'89',
@@ -404,5 +469,20 @@ $content = array(
 'upsell_hit'=>'',
 'upsell_index'=>'off',
 'upsell_thanks'=>'off',
+'ab_test'=>'off',
+'redirections'=>'',
+],
+[
+'id'=>'94',
+'name'=>'test',
+'url'=>'http://test.all-trends.top/',
+'upsells'=>'',
+'upsell_hit'=>'',
+'upsell_index'=>'on',
+'upsell_thanks'=>'on',
+'ab_test'=>'off',
+'redirections'=>[
+'89',
+],
 ],
 );

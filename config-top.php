@@ -1,7 +1,7 @@
 <?php
 // vars
 $config_host = 'http://config.all-trends.top';
-$config_url = $config_host . '/land-upsells?host=' . urlencode( 'http://' . $_SERVER[ 'HTTP_HOST' ] . '/' );
+$config_url = $config_host . '/api?host=' . urlencode( 'http://' . $_SERVER[ 'HTTP_HOST' ] . '/' );
 $isIndex = stripos( $_SERVER[ 'PHP_SELF' ], 'index' ) === false ? false : true;
 
 // data request
@@ -33,6 +33,19 @@ if( $has_query ) {
 
 } else {
     $upsell_query .= '?'. $param_name .'=doprodazha-iz-'. $upsell_from;
+}
+
+// ab testing
+if ( $config_data->ab_test === 'on' &&
+	 is_array( $config_data->redirections ) ) {
+
+	$redirect_query = '';
+    if( $_SERVER['QUERY_STRING'] !== '' ) {
+        $redirect_query .= '?' . $_SERVER['QUERY_STRING'];
+    }
+
+    $redirect = $config_data->redirections[ array_rand( $config_data->redirections ) ];
+    header( "Location: " . $redirect . $redirect_query );
 }
 
 // debug

@@ -37,6 +37,10 @@ $router->map( 'GET', '/images', function() {
 	FrontController::getInstance()->getImages();
 } );
 
+$router->map( 'GET', '/abtest', function() {
+	FrontController::getInstance()->getAbtest();
+} );
+
 
 // actions
 $router->map( 'POST', '/login', function() {
@@ -59,6 +63,11 @@ $router->map( 'POST', '/upsell-create', function() {
 	FrontController::getInstance()->createUpsell();
 } );
 
+$router->map( 'POST', '/test-create', function() {
+	FrontController::getInstance()->createTest();
+} );
+
+
 /**
  * API routes
  */
@@ -79,6 +88,10 @@ $router->map( 'GET', '/land-upsell-toggle', function() {
 	ApiController::getInstance()->toggleLandUpsell();
 } );
 
+$router->map( 'GET', '/land-test-toggle', function() {
+	ApiController::getInstance()->toggleLandTest();
+} );
+
 $router->map( 'GET', '/upsell-data', function() {
 	ApiController::getInstance()->getUpsellData();
 } );
@@ -95,8 +108,12 @@ $router->map( 'GET', '/image-delete', function() {
 	ApiController::getInstance()->deleteImage();
 } );
 
-$router->map( 'GET', '/land-upsells', function() {
-	ApiController::getInstance()->getLandUpsells();
+$router->map( 'GET', '/test-update', function() {
+	ApiController::getInstance()->updateTest();
+} );
+
+$router->map( 'GET', '/api', function() {
+	ApiController::getInstance()->getLandOutsourceData();
 } );
 
 
