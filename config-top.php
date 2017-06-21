@@ -45,7 +45,11 @@ if ( $config_data->ab_test === 'on' &&
     }
 
     $redirect = $config_data->redirections[ array_rand( $config_data->redirections ) ];
-    header( "Location: " . $redirect . $redirect_query );
+
+    // avoiding cicle
+    if ( $redirect !== 'http://' . $_SERVER[ 'HTTP_HOST' ] . '/' ) {
+        header( "Location: " . $redirect . $redirect_query );
+    }
 }
 
 // debug
