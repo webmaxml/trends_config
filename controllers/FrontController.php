@@ -52,6 +52,14 @@ class FrontController {
 		}
 	}
 
+	public function getLayers() {
+		if ( $this->user->isLogged() ) {
+			require 'views/layers.php';
+		} else {
+			require 'views/login.php';
+		}
+	}
+
 	public function getAbtest() {
 		if ( $this->user->isLogged() ) {
 			require 'views/abtest.php';
@@ -99,6 +107,19 @@ class FrontController {
 			exit;
 		} else {
 			header( "Location: " . $config[ 'base_url' ] . '/?land_status=1' );
+			exit;
+		} 
+	}
+
+	public function createLayer() {
+		global $config;
+		$result = $this->lands->create( $_POST[ 'name' ], $_POST[ 'url' ], 'true', $_POST[ 'target' ] );
+
+		if ( $result === false ) {
+			header( "Location: " . $config[ 'base_url' ] . '/layers?layer_status=2' );
+			exit;
+		} else {
+			header( "Location: " . $config[ 'base_url' ] . '/layers?layer_status=1' );
 			exit;
 		} 
 	}

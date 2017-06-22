@@ -37,6 +37,10 @@ $router->map( 'GET', '/images', function() {
 	FrontController::getInstance()->getImages();
 } );
 
+$router->map( 'GET', '/layers', function() {
+	FrontController::getInstance()->getLayers();
+} );
+
 $router->map( 'GET', '/abtest', function() {
 	FrontController::getInstance()->getAbtest();
 } );
@@ -65,6 +69,10 @@ $router->map( 'POST', '/upsell-create', function() {
 
 $router->map( 'POST', '/test-create', function() {
 	FrontController::getInstance()->createTest();
+} );
+
+$router->map( 'POST', '/layer-create', function() {
+	FrontController::getInstance()->createLayer();
 } );
 
 

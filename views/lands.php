@@ -56,7 +56,7 @@ require 'header.php'
                         </thead>
                         <tbody>
                             <? foreach( Lands::getInstance()->getLandsData() as $land ) { ?>
-
+                                <? if ( $land[ 'layer' ] === 'true' ) { continue; } ?>
                                 <tr>
                                     <td style="text-align: center; vertical-align: middle;"><?= $land[ 'id' ] ?></td>
                                     <td style="text-align: center; vertical-align: middle;"><?= $land[ 'name' ] ?></td>

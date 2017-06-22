@@ -8,6 +8,7 @@ if ( is_array( $config_data->upsells ) ) {
 
 		$upsells = $config_data->upsells;
 		$hit = $config_data->hit;
+		$upsell_query = getUpsellQuery( 'utm_medium' );
 ?>
 
 <section id="allTrend" class="all-trend">

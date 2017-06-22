@@ -459,6 +459,114 @@ $( function() {
 	}
 	// END TEST-UPDATE
 
+	// BEGIN LAYER-UPDATE
+	if ( document.getElementById( 'layerConfigForm' ) ) {
+		(function(){
+
+			var $form = $( '#layerConfigForm' );
+			var $configButtons = $( '.layer__config-btn' );
+			var $deleteButton = $( '#deleteLayerBtn' );
+
+			$configButtons.on( 'click', function( e ) {
+				var landId = $( this ).data( 'land-id' );
+
+				$.ajax({
+					method: 'get',
+					url: globalData.ajaxUrl + '/land-data',
+					dataType: 'json',
+					data: {
+						id: landId
+					},
+					success: function( data, status, xhr ) {
+						$( '#layerConfigTitle' ).text( 'Редактировать прокладку ' + data.name );
+						$( '#layerId2' ).val( data.id );
+						$( '#layerName2' ).val( data.name );
+						$( '#layerUrl2' ).val( data.url );
+						$( '#layerTarget2' ).val( data.layer_target ).trigger('change.select2');
+						$deleteButton.data( 'land-id', data.id );						
+					},
+					error: function( xhr, status, error ) {
+						new PNotify({
+							title: 'Ошибка',
+							text: error,
+							type: 'error',
+							styling: 'bootstrap3'
+						});	
+					}
+				});
+
+			} );
+
+			$form.on( 'submit', function( e ) {
+				e.preventDefault();
+
+				var $configForm = $( this );
+
+				$.ajax({
+					method: 'get',
+					url: globalData.ajaxUrl + '/land-update',
+					dataType: 'json',
+					data: $configForm.serialize(),
+					success: function( data, status, xhr ) {
+						if ( data.success ) {
+							document.location.reload( true );
+						} else {
+							new PNotify({
+								title: 'Ошибка',
+								text: 'Прокладка по какой-то причине не была обновлена!',
+								type: 'error',
+								styling: 'bootstrap3'
+							});	
+						}
+					},
+					error: function( xhr, status, error ) {
+						new PNotify({
+							title: 'Ошибка',
+							text: error,
+							type: 'error',
+							styling: 'bootstrap3'
+						});	
+					}
+				});
+
+			});
+
+			$deleteButton.on( 'click', function( e ) {
+				e.preventDefault();
+				var landId = $( this ).data( 'land-id' );
+
+				$.ajax({
+					method: 'get',
+					url: globalData.ajaxUrl + '/land-delete',
+					dataType: 'json',
+					data: { id: landId },
+					success: function( data, status, xhr ) {
+						if ( data.success ) {
+							document.location.reload( true );
+						} else {
+							new PNotify({
+								title: 'Ошибка',
+								text: 'Прокладка по какой-то причине не была удалена!',
+								type: 'error',
+								styling: 'bootstrap3'
+							});	
+						}
+					},
+					error: function( xhr, status, error ) {
+						new PNotify({
+							title: 'Ошибка',
+							text: error,
+							type: 'error',
+							styling: 'bootstrap3'
+						});	
+					}
+				});
+			} );
+
+		}());
+	}
+	// END LAYER-UPDATE
+
 	// BEGIN IMAGE_DELETE
 	if ( document.getElementsByClassName( 'image__item' ).length > 0 ) {
 		(function(){
@@ -504,7 +612,7 @@ $( function() {
 	}
 	// END IMAGE_DELETE
 
-	// BEGIN LANDS-TABLE
+	// BEGIN TABLES
 	if ( document.getElementById( 'datatable-responsive' ) ) {
 		(function(){
 
@@ -535,40 +643,7 @@ $( function() {
 
 		}());
 	}
-	// END LANDS-TABLE
-
-	// BEGIN UPSELLS-TABLE
-	if ( document.getElementById( 'datatable-upsells' ) ) {
-		(function(){
-
-			$('#datatable-upsells').DataTable({
-				"language": {
-					"processing": "Подождите...",
-					"search": "Поиск:",
-					"lengthMenu": "Показать _MENU_ записей",
-					"info": "Записи с _START_ до _END_ из _TOTAL_ записей",
-					"infoEmpty": "Записи с 0 до 0 из 0 записей",
-					"infoFiltered": "(отфильтровано из _MAX_ записей)",
-					"infoPostFix": "",
-					"loadingRecords": "Загрузка записей...",
-					"zeroRecords": "Записи отсутствуют.",
-					"emptyTable": "В таблице отсутствуют данные",
-					"paginate": {
-						"first": "Первая",
-						"previous": "Предыдущая",
-						"next": "Следующая",
-						"last": "Последняя"
-					},
-					"aria": {
-						"sortAscending": ": активировать для сортировки столбца по возрастанию",
-						"sortDescending": ": активировать для сортировки столбца по убыванию"
-					}
-				}
-			});
-
-		}());
-	}
-	// END UPSELLS-TABLE
+	// END TABLES
 
 	// BEGIN SELECT-LAND-UPSELLS
 	if ( document.getElementById( 'landUpsells2' ) ) {
@@ -606,5 +681,18 @@ $( function() {
 		}());
 	}
 	// END SELECT-TEST-REDIRECTS
+
+	// BEGIN SELECT-LANDINGS
+	if ( document.getElementsByClassName( 'select2_group' ).length > 0 ) {
+		(function(){
+
+        	$( ".select2_group" ).select2({
+        		dropdownCssClass: "increasedzindexclass",
+          		width: 'resolve'
+        	});
+
+		}());
+	}
+	// END SELECT-LANDINGS
 
 } );

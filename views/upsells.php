@@ -41,7 +41,7 @@ require 'header.php'
                     </div>
 
                     <!-- BEGIN TABLE -->
-                    <table id="datatable-upsells" class="table table-striped table-bordered dataTable no-footer" cellspacing="0" width="100%">
+                    <table id="datatable-responsive" class="table table-striped table-bordered dataTable no-footer" cellspacing="0" width="100%">
                         <thead>
                             <tr>
                                 <th style="text-align: center; vertical-align: middle;">ID</th>

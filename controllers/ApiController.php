@@ -40,6 +40,8 @@ class ApiController {
 			$values[ 'upsell_hit' ] = '';
 		}
 
+		$values[ 'layer_target' ] = isset( $_GET[ 'layer_target' ] ) ? $_GET[ 'layer_target' ] : '';
+
 		$result = $this->lands->update( $_GET[ 'id' ], $values );
 		$result === false ? false : true;
 

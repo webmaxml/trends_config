@@ -10,19 +10,19 @@ require 'header.php'
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>АБ тестирование</h2>
+                    <h2>Прокладки</h2>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
 
                     <!-- BEGIN MODALS -->
-                    <? switch ( $_GET[ 'test_status' ] ) { 
+                    <? switch ( $_GET[ 'layer_status' ] ) { 
                         case '1': ?>
                             <div class="alert alert-success alert-dismissible fade in">
                                 <button type="button" class="close" data-dismiss="alert">
                                     <span>&times;</span>
                                 </button>
-                                Тест успешно создан.
+                                Прокладка успешно подключена.
                             </div>
                     <? break; ?>
                     <? case '2' ?>
@@ -30,14 +30,14 @@ require 'header.php'
                                 <button type="button" class="close" data-dismiss="alert">
                                     <span>&times;</span>
                                 </button>
-                                Произошла ошибка при создании теста!
+                                Произошла ошибка при подключении прокладки!
                             </div>
                     <? break; ?>
                     <? } ?>
                     <!-- END MODALS -->
 
                     <div style="margin: 20px 0;">
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#createTestModal">Cоздать тест</button>
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#createLayerModal">Подключить прокладку</button>
                     </div>
 
                     <!-- BEGIN TABLE -->
@@ -47,14 +47,13 @@ require 'header.php'
                                 <th style="text-align: center; vertical-align: middle;">ID</th>
                                 <th style="text-align: center; vertical-align: middle;">Название</th>
                                 <th style="text-align: center; vertical-align: middle;">URL</th>
-                                <th style="text-align: center; vertical-align: middle;">Направления</th>
-                                <th style="text-align: center; vertical-align: middle;">Статус</th>
+                                <th style="text-align: center; vertical-align: middle;">На лендинг</th>
                                 <th style="text-align: center; vertical-align: middle;">Редактировать</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <? foreach( Lands::getInstance()->getTestLands() as $land ) { ?>
-
+                            <? foreach( Lands::getInstance()->getLandsData() as $land ) { ?>
+                                <? if ( $land[ 'layer' ] === 'false' ) { continue; } ?>
                                 <tr>
                                     <td style="text-align: center; vertical-align: middle;"><?= $land[ 'id' ] ?></td>
                                     <td style="text-align: center; vertical-align: middle;"><?= $land[ 'name' ] ?></td>
@@ -65,26 +64,24 @@ require 'header.php'
                                     </td>
                                     <td style="text-align: center; vertical-align: middle;">
                                         <? 
-                                            foreach( $land[ 'redirections' ] as $landId ) {
-                                                $landName = Lands::getInstance()->getDataById( $landId )[ 'name' ];
+                                            if ( $land[ 'layer_target' ] === '' ) {
+                                                echo 'нет';
+                                            } else  {
+                                                $target = Lands::getInstance()->getDataById( $land[ 'layer_target' ] );
+                                                if ( !$target[ 'name' ] ) { 
+                                                    $targetName = 'Удалено'; 
+                                                } else {
+                                                    $targetName = $target[ 'name' ];
+                                                }
 
                                                 echo '<div>'; 
-                                                echo $landName;
+                                                echo $targetName;
                                                 echo '</div>';
                                             }
                                         ?>
                                     </td>
                                     <td style="text-align: center; vertical-align: middle;">
-                                        <? 
-                                            if ( $land[ 'ab_test' ] === 'on' ) {
-                                                echo '<input type="checkbox" class="test__toggle" data-land-id="' . $land[ "id" ] . '" checked>';
-                                            } else {
-                                                echo '<input type="checkbox" class="test__toggle" data-land-id="' . $land[ "id" ] . '">';
-                                            }
-                                        ?>
-                                    </td>
-                                    <td style="text-align: center; vertical-align: middle;">
-                                        <button type="button" class="test__config-btn btn btn-primary" data-toggle="modal" data-target="#configTestModal" data-land-id="<?= $land[ 'id' ] ?>">
+                                        <button type="button" class="layer__config-btn btn btn-primary" data-toggle="modal" data-target="#configLayerModal" data-land-id="<?= $land[ 'id' ] ?>">
                                             <i class="fa fa-gears"></i>
                                         </button>
                                     </td>
@@ -104,27 +101,47 @@ require 'header.php'
 <!-- /page content -->
 
 <!-- BEGIN MODALS -->
-<div id="createTestModal" class="modal fade" style="z-index: 99999;">
+<div id="createLayerModal" class="modal fade" style="z-index: 99999;">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">
                     <span>x</span>
                 </button>
-                <h4 class="modal-title">Создать тест</h4>
+                <h4 class="modal-title">Подключить прокладку</h4>
             </div>
             <div class="modal-body">
 
-                <!-- BEGIN TEST-CREATE FORM -->                                         
-                <form class="form-horizontal form-label-left" action="/test-create" method="post">
+                <!-- BEGIN LAYER-CREATE FORM -->                                         
+                <form class="form-horizontal form-label-left" action="/layer-create" method="post">
 
                     <div class="form-group">
-                        <label for="testEntry" class="control-label col-md-3 col-sm-3 col-xs-12">
-                            Точка входа
+                        <label for="layerName" class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Название
                             <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <select id="testEntry" class="select2_group form-control col-md-7 col-xs-12" name="entry" style="width: 100%;" required>
+                            <input type="text" class="form-control" name="name" id="layerName" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="layerUrl" class="control-label col-md-3 col-sm-3 col-xs-12">
+                            URL
+                            <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="url" id="layerUrl" class="form-control col-md-7 col-xs-12" name="url" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="layerTarget" class="control-label col-md-3 col-sm-3 col-xs-12">
+                            На лендинг
+                            <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <select id="layerTarget" class="select2_group form-control col-md-7 col-xs-12" name="target" style="width: 100%;" required>
                                 <optgroup label="Лендинги">
                                     <? foreach ( Lands::getInstance()->getLandsData() as $land ) { ?>
                                         <? if ( $land[ 'layer' ] === 'true' ) { continue; } ?> 
@@ -136,68 +153,78 @@ require 'header.php'
                                         <? if ( $land[ 'layer' ] === 'false' ) { continue; } ?> 
                                         <option value="<?= $land[ 'id' ] ?>"><?= $land[ 'name' ] ?></option>
                                     <? } ?>        
-                                </optgroup> 
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="testRedirects" class="control-label col-md-3 col-sm-3 col-xs-12">
-                            Направления
-                            <span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <select id="testRedirects" class="select2_multiple form-control col-md-7 col-xs-12" multiple="multiple" style="width: 100%;" name="redirects[]" required>
-                                <? foreach ( Lands::getInstance()->getLandsData() as $land ) { ?>
-
-                                    <option value="<?= $land[ 'id' ] ?>"><?= $land[ 'name' ] ?></option>
-
-                                <? } ?>
+                                </optgroup>                    
                             </select>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                            <button type="submit" class="btn btn-success">Создать</button>
+                            <button type="submit" class="btn btn-success">Подключить</button>
                         </div>
                     </div>
 
                 </form>
-                <!-- END TEST-CREATE FORM --> 
+                <!-- END LAYER-CREATE FORM --> 
 
             </div>
         </div>
     </div>
 </div>
 
-<div id="configTestModal" class="modal fade" tabindex="-1" style="z-index: 99999;">
+<div id="configLayerModal" class="modal fade" style="z-index: 99999;">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">
                     <span>x</span>
                 </button>
-                <h4 class="modal-title" id="landConfigTitle">Редактировать Тест</h4>
+                <h4 class="modal-title" id="layerConfigTitle">Редактировать прокладку</h4>
             </div>
             <div class="modal-body">
 
-                <!-- BEGIN TEST-CONFIG FORM -->                                         
-                <form id="testConfigForm" class="form-horizontal form-label-left" action="" method="post">
+                <!-- BEGIN LAYER-CONFIG FORM -->                                         
+                <form id="layerConfigForm" class="form-horizontal form-label-left" action="" method="post">
 
-                    <input type="hidden" id="landId3" name="entry">
+                    <input type="hidden" id="layerId2" name="id">
 
                     <div class="form-group">
-                        <label for="testRedirects2" class="control-label col-md-3 col-sm-3 col-xs-12">
-                            Направления
+                        <label for="layerName2" class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Название
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <select id="testRedirects2" class="select2_multiple form-control col-md-7 col-xs-12" multiple="multiple" style="width: 100%;" name="redirects[]" require>
-                                <? foreach ( Lands::getInstance()->getLandsData() as $land ) { ?>
+                            <input type="text" class="form-control" name="name" id="layerName2">
+                        </div>
+                    </div>
 
-                                    <option value="<?= $land[ 'id' ] ?>"><?= $land[ 'name' ] ?></option>
+                    <div class="form-group">
+                        <label for="layerUrl2" class="control-label col-md-3 col-sm-3 col-xs-12">
+                            URL
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="url" id="layerUrl2" class="form-control col-md-7 col-xs-12" name="url">
+                        </div>
+                    </div>
 
-                                <? } ?>
+
+                    <div class="form-group">
+                        <label for="layerTarget2" class="control-label col-md-3 col-sm-3 col-xs-12">
+                            На лендинг
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <select id="layerTarget2" class="select2_group form-control col-md-7 col-xs-12" name="layer_target" style="width: 100%;">
+                                <optgroup label="Лендинги">
+                                    <? foreach ( Lands::getInstance()->getLandsData() as $land ) { ?>
+                                        <? if ( $land[ 'layer' ] === 'true' ) { continue; } ?> 
+                                        <option value="<?= $land[ 'id' ] ?>"><?= $land[ 'name' ] ?></option>
+                                    <? } ?>        
+                                </optgroup>
+                                <optgroup label="Прокладки">
+                                    <? foreach ( Lands::getInstance()->getLandsData() as $land ) { ?>
+                                        <? if ( $land[ 'layer' ] === 'false' ) { continue; } ?> 
+                                        <option value="<?= $land[ 'id' ] ?>"><?= $land[ 'name' ] ?></option>
+                                    <? } ?>        
+                                </optgroup>  
                             </select>
                         </div>
                     </div>
@@ -205,12 +232,12 @@ require 'header.php'
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                             <button type="submit" class="btn btn-primary">Обновить</button>
-                            <button type="button" id="deleteTestBtn" class="btn btn-danger">Удалить</button>
+                            <button type="button" id="deleteLayerBtn" class="btn btn-danger">Удалить</button>
                         </div>
                     </div>
 
                 </form>
-                <!-- END TEST-CONFIG FORM --> 
+                <!-- END LAYER-CONFIG FORM --> 
 
             </div>
         </div>

@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="<?= $config_host ?>/assets/css/allTrends.css">
+<script src="http://config.all-trends.top/assets/vendors/jquery/dist/jquery.min.js"></script>
 <?php 
 if ( isset( $config_data->upsells ) && count( $config_data->upsells) === 2 && $isIndex ) { ?>
 	

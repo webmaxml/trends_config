@@ -19,7 +19,7 @@ class Lands {
 		$this->images = Images::getInstance();
 	}
 
-	public function create( $name, $url ) {
+	public function create( $name, $url, $layer = 'false', $layer_target = '' ) {
 		$this->db->create( 'lands', array(
 			'name' => $name,
 			'url' => $url,
@@ -27,6 +27,8 @@ class Lands {
 			'upsell_hit' => '',
 			'upsell_index' => 'on',
 			'upsell_thanks' => 'on',
+			'layer' => $layer,
+			'layer_target' => $layer_target,
 			'ab_test' => 'off',
 			'redirections' => '',
 		) );
@@ -67,7 +69,8 @@ class Lands {
 					'hit' => $land[ 'upsell_hit' ],
 					'upsell_index' => $land[ 'upsell_index' ],
 					'upsell_thanks' => $land[ 'upsell_thanks' ],
-					'ab_test' => $land[ 'ab_test' ]
+					'ab_test' => $land[ 'ab_test' ],
+					'layer' => $land[ 'layer' ]
 				);
 
 				// upsells
@@ -98,6 +101,16 @@ class Lands {
 					$data[ 'redirections' ] = $redirections;
 				} else {
 					$data[ 'redirections' ] = $land[ 'redirections' ];
+				}
+
+				// layer
+				if ( $land[ 'layer' ] === 'true' ) {
+					$target = $this->getDataById( $land[ 'layer_target' ] );
+					if ( $target ) {
+						$data[ 'layer_target' ] = $target[ 'url' ];
+					}
+				} else {
+					$data[ 'layer_target' ] = $land[ 'layer_target' ];
 				}
 			
 				return $data;

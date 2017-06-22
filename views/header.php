@@ -29,7 +29,10 @@
                                     </a>
                                     <ul class="nav child_menu">
                                         <li>
-                                            <a href="/">Допродажи</a>
+                                            <a href="/">Допродажа</a>
+                                        </li>
+                                        <li>
+                                            <a href="/layers">Прокладки</a>
                                         </li>
                                         <li>
                                             <a href="/abtest">АБ тестирование</a>
