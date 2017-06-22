@@ -1,5 +1,278 @@
 $( function() {
 
+	// BEGIN LAND-DATA-UPDATE
+	if ( document.getElementById( 'landDataConfigForm' ) ) {
+		(function(){
+
+			var $form = $( '#landDataConfigForm' );
+			var $configButtons = $( '.land-data__config-btn' );
+			var $deleteButton = $( '#deleteLandDataBtn' );
+
+			$configButtons.on( 'click', function( e ) {
+				var landId = $( this ).data( 'land-id' );
+
+				$.ajax({
+					method: 'get',
+					url: globalData.ajaxUrl + '/land-data',
+					dataType: 'json',
+					data: {
+						id: landId
+					},
+					success: function( data, status, xhr ) {
+						$( '#landConfigTitle' ).text( 'Редактировать ' + data.name );
+						$( '#landDataId' ).val( data.id );
+						$( '#landDataName' ).val( data.name );
+						$( '#landDataUrl' ).val( data.url );
+						$( '#landDataProductId' ).val( data.product_id );
+						$( '#landDataProduct' ).val( data.product );
+						$( '#landDataPrice1' ).val( data.price1 );
+						$( '#landDataPrice2' ).val( data.price2 );
+						$( '#landDataPrice3' ).val( data.price3 );
+						$( '#landDataPrice4' ).val( data.price4 );
+						$( '#landDataPrice5' ).val( data.price5 );
+						$( '#landDataPrice6' ).val( data.price6 );
+						$( '#landDataPrice7' ).val( data.price7 );
+						$( '#landDataPrice8' ).val( data.price8 );
+						$( '#landDataPrice9' ).val( data.price9 );
+						$( '#landDataPrice10' ).val( data.price10 );
+						$( '#landDataDiscount' ).val( data.discount );
+						$( '#landDataCurrency' ).val( data.currency );
+						$deleteButton.data( 'land-id', data.id );
+					},
+					error: function( xhr, status, error ) {
+						new PNotify({
+							title: 'Ошибка',
+							text: error,
+							type: 'error',
+							styling: 'bootstrap3'
+						});	
+					}
+				});
+
+			} );
+
+			$form.on( 'submit', function( e ) {
+				e.preventDefault();
+
+				var $configForm = $( this );
+
+				$.ajax({
+					method: 'get',
+					url: globalData.ajaxUrl + '/land-update',
+					dataType: 'json',
+					data: $configForm.serialize(),
+					success: function( data, status, xhr ) {
+						if ( data.success ) {
+							document.location.reload( true );
+						} else {
+							new PNotify({
+								title: 'Ошибка',
+								text: 'Лендинг по какой-то причине не был обновлен!',
+								type: 'error',
+								styling: 'bootstrap3'
+							});	
+						}
+					},
+					error: function( xhr, status, error ) {
+						new PNotify({
+							title: 'Ошибка',
+							text: error,
+							type: 'error',
+							styling: 'bootstrap3'
+						});	
+					}
+				});
+
+			} );
+
+			$deleteButton.on( 'click', function( e ) {
+				e.preventDefault();
+				var landId = $( this ).data( 'land-id' );
+
+				$.ajax({
+					method: 'get',
+					url: globalData.ajaxUrl + '/land-delete',
+					dataType: 'json',
+					data: { id: landId },
+					success: function( data, status, xhr ) {
+						if ( data.success ) {
+							document.location.reload( true );
+						} else {
+							new PNotify({
+								title: 'Ошибка',
+								text: 'Лендинг по какой-то причине не был удален!',
+								type: 'error',
+								styling: 'bootstrap3'
+							});	
+						}
+					},
+					error: function( xhr, status, error ) {
+						new PNotify({
+							title: 'Ошибка',
+							text: error,
+							type: 'error',
+							styling: 'bootstrap3'
+						});	
+					}
+				});
+			} );
+
+		}());
+	}
+	// END LAND-DATA-UPDATE
+
+	// BEGIN LAND-METRIC-UPDATE
+	if ( document.getElementById( 'metricLandForm' ) ) {
+		(function(){
+
+			var $form = $( '#metricLandForm' );
+			var $configButtons = $( '.land-data__metric-btn' );
+
+			$configButtons.on( 'click', function( e ) {
+				var landId = $( this ).data( 'land-id' );
+
+				$.ajax({
+					method: 'get',
+					url: globalData.ajaxUrl + '/land-data',
+					dataType: 'json',
+					data: {
+						id: landId
+					},
+					success: function( data, status, xhr ) {
+						$( '#landMetricTitle' ).text( 'Редактировать метрики ' + data.name );
+						$( '#metricLandId' ).val( data.id );
+						$( '#metricIndexHead' ).val( data.metric_head_index );
+						$( '#metricIndexBody' ).val( data.metric_body_index );
+						$( '#metricThanksHead' ).val( data.metric_head_thanks );
+						$( '#metricThanksBody' ).val( data.metric_body_thanks );
+					},
+					error: function( xhr, status, error ) {
+						new PNotify({
+							title: 'Ошибка',
+							text: error,
+							type: 'error',
+							styling: 'bootstrap3'
+						});	
+					}
+				});
+
+			} );
+
+			$form.on( 'submit', function( e ) {
+				e.preventDefault();
+
+				var $configForm = $( this );
+
+				$.ajax({
+					method: 'get',
+					url: globalData.ajaxUrl + '/land-update',
+					dataType: 'json',
+					data: $configForm.serialize(),
+					success: function( data, status, xhr ) {
+						if ( data.success ) {
+							document.location.reload( true );
+						} else {
+							new PNotify({
+								title: 'Ошибка',
+								text: 'Лендинг по какой-то причине не был обновлен!',
+								type: 'error',
+								styling: 'bootstrap3'
+							});	
+						}
+					},
+					error: function( xhr, status, error ) {
+						new PNotify({
+							title: 'Ошибка',
+							text: error,
+							type: 'error',
+							styling: 'bootstrap3'
+						});	
+					}
+				});
+
+			} );
+
+		}());
+	}
+	// END LAND-METRIC-UPDATE
+
+	// BEGIN LAND-SCRIPT-UPDATE
+	if ( document.getElementById( 'scriptLandForm' ) ) {
+		(function(){
+
+			var $form = $( '#scriptLandForm' );
+			var $configButtons = $( '.land-data__script-btn' );
+			var checkbox = document.getElementById( 'scriptActiveCheckbox' );
+			var switchery = new Switchery( checkbox );
+
+			$configButtons.on( 'click', function( e ) {
+				var landId = $( this ).data( 'land-id' );
+
+				$.ajax({
+					method: 'get',
+					url: globalData.ajaxUrl + '/land-data',
+					dataType: 'json',
+					data: {
+						id: landId
+					},
+					success: function( data, status, xhr ) {
+						$( '#landScriptTitle' ).text( 'Редактировать скрипт ' + data.name );
+						$( '#scriptLandId' ).val( data.id );
+						if ( data.script_active === 'on' && !checkbox.checked ||
+							data.script_active !== 'on' && checkbox.checked ) {
+							$( checkbox ).trigger( 'click' );
+						} 
+					},
+					error: function( xhr, status, error ) {
+						new PNotify({
+							title: 'Ошибка',
+							text: error,
+							type: 'error',
+							styling: 'bootstrap3'
+						});	
+					}
+				});
+
+			} );
+
+			$form.on( 'submit', function( e ) {
+				e.preventDefault();
+
+				var $configForm = $( this );
+
+				$.ajax({
+					method: 'get',
+					url: globalData.ajaxUrl + '/land-update-script',
+					dataType: 'json',
+					data: $configForm.serialize(),
+					success: function( data, status, xhr ) {
+						if ( data.success ) {
+							document.location.reload( true );
+						} else {
+							new PNotify({
+								title: 'Ошибка',
+								text: 'Лендинг по какой-то причине не был обновлен!',
+								type: 'error',
+								styling: 'bootstrap3'
+							});	
+						}
+					},
+					error: function( xhr, status, error ) {
+						new PNotify({
+							title: 'Ошибка',
+							text: error,
+							type: 'error',
+							styling: 'bootstrap3'
+						});	
+					}
+				});
+
+			} );
+
+		}());
+	}
+	// END LAND-SCRIPT-UPDATE
+
 	// BEGIN UPSALE-UPDATE
 	if ( document.getElementById( 'configUpsellForm' ) ) {
 		(function(){
@@ -112,7 +385,7 @@ $( function() {
 	}
 	// END UPSALE-UPDATE
 
-	// BEGIN LAND-UPDATE
+	// BEGIN LAND-UPSELL-UPDATE
 	if ( document.getElementById( 'landConfigForm' ) ) {
 		(function(){
 
@@ -225,7 +498,7 @@ $( function() {
 
 				$.ajax({
 					method: 'get',
-					url: globalData.ajaxUrl + '/land-update',
+					url: globalData.ajaxUrl + '/land-update-upsells',
 					dataType: 'json',
 					data: $configForm.serialize(),
 					success: function( data, status, xhr ) {
@@ -286,7 +559,7 @@ $( function() {
 
 		}());
 	}
-	// END LAND-UPDATE
+	// END LAND-UPSELL-UPDATE
 
 	// BEGIN TEST-UPDATE
 	if ( document.getElementById( 'testConfigForm' ) ) {
@@ -660,6 +933,19 @@ $( function() {
 	}
 	// END SELECT-LAND-UPSELLS
 
+	// BEGIN SELECT-LANDINGS
+	if ( document.getElementsByClassName( 'select2_group' ).length > 0 ) {
+		(function(){
+
+        	$( ".select2_group" ).select2({
+        		dropdownCssClass: "increasedzindexclass",
+          		width: 'resolve'
+        	});
+
+		}());
+	}
+	// END SELECT-LANDINGS
+
 	// BEGIN SELECT-TEST-REDIRECTS
 	if ( document.getElementById( 'testRedirects' ) ) {
 		(function(){
@@ -682,17 +968,5 @@ $( function() {
 	}
 	// END SELECT-TEST-REDIRECTS
 
-	// BEGIN SELECT-LANDINGS
-	if ( document.getElementsByClassName( 'select2_group' ).length > 0 ) {
-		(function(){
-
-        	$( ".select2_group" ).select2({
-        		dropdownCssClass: "increasedzindexclass",
-          		width: 'resolve'
-        	});
-
-		}());
-	}
-	// END SELECT-LANDINGS
-
+	
 } );

@@ -25,6 +25,10 @@ $router->map( 'GET', '/', function() {
 	FrontController::getInstance()->getRoot();
 } );
 
+$router->map( 'GET', '/land-upsells', function() {
+	FrontController::getInstance()->getLandUpsells();
+} );
+
 $router->map( 'GET', '/upsells', function() {
 	FrontController::getInstance()->getUpsells();
 } );
@@ -88,17 +92,31 @@ $router->map( 'GET', '/land-update', function() {
 	ApiController::getInstance()->updateLand();
 } );
 
-$router->map( 'GET', '/land-delete', function() {
-	ApiController::getInstance()->deleteLand();
+$router->map( 'GET', '/land-update-upsells', function() {
+	ApiController::getInstance()->updateLandUpsells();
+} );
+
+$router->map( 'GET', '/land-update-script', function() {
+	ApiController::getInstance()->updateLandScript();
 } );
 
 $router->map( 'GET', '/land-upsell-toggle', function() {
 	ApiController::getInstance()->toggleLandUpsell();
 } );
 
+$router->map( 'GET', '/test-update', function() {
+	ApiController::getInstance()->updateTest();
+} );
+
 $router->map( 'GET', '/land-test-toggle', function() {
 	ApiController::getInstance()->toggleLandTest();
 } );
+
+$router->map( 'GET', '/land-delete', function() {
+	ApiController::getInstance()->deleteLand();
+} );
+
+
 
 $router->map( 'GET', '/upsell-data', function() {
 	ApiController::getInstance()->getUpsellData();
@@ -112,13 +130,13 @@ $router->map( 'GET', '/upsell-delete', function() {
 	ApiController::getInstance()->deleteUpsell();
 } );
 
+
+
 $router->map( 'GET', '/image-delete', function() {
 	ApiController::getInstance()->deleteImage();
 } );
 
-$router->map( 'GET', '/test-update', function() {
-	ApiController::getInstance()->updateTest();
-} );
+
 
 $router->map( 'GET', '/api', function() {
 	ApiController::getInstance()->getLandOutsourceData();

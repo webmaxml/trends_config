@@ -23,6 +23,20 @@ class Lands {
 		$this->db->create( 'lands', array(
 			'name' => $name,
 			'url' => $url,
+			'product_id' => '',
+			'product' => '',
+			'price1' => '0',
+			'price2' => '',
+			'price3' => '',
+			'price4' => '',
+			'price5' => '',
+			'price6' => '',
+			'price7' => '',
+			'price8' => '',
+			'price9' => '',
+			'price10' => '',
+			'discount' => '0',
+			'currency' => 'грн',
 			'upsells' => '',
 			'upsell_hit' => '',
 			'upsell_index' => 'on',
@@ -31,6 +45,15 @@ class Lands {
 			'layer_target' => $layer_target,
 			'ab_test' => 'off',
 			'redirections' => '',
+			'metric_head_index' => '',
+			'metric_body_index' => '',
+			'metric_head_thanks' => '',
+			'metric_body_thanks' => '',
+			'script_active' => '',
+			'script_country' => '',
+			'script_sex' => '',
+			'script_windows' => '',
+			'script_items' => ''
 		) );
 	}
 
@@ -66,11 +89,33 @@ class Lands {
 			if ( $land[ 'url' ] === $url ) {
 
 				$data = array(
+					'product' => $land[ 'product' ],
 					'hit' => $land[ 'upsell_hit' ],
+					'price1' => $land[ 'price1' ],
+					'price2' => $land[ 'price2' ],
+					'price3' => $land[ 'price3' ],
+					'price4' => $land[ 'price4' ],
+					'price5' => $land[ 'price5' ],
+					'price6' => $land[ 'price6' ],
+					'price7' => $land[ 'price7' ],
+					'price8' => $land[ 'price8' ],
+					'price9' => $land[ 'price9' ],
+					'price10' => $land[ 'price10' ],
+					'discount' => $land[ 'discount' ],
+					'currency' => $land[ 'currency' ],
 					'upsell_index' => $land[ 'upsell_index' ],
 					'upsell_thanks' => $land[ 'upsell_thanks' ],
 					'ab_test' => $land[ 'ab_test' ],
-					'layer' => $land[ 'layer' ]
+					'layer' => $land[ 'layer' ],
+					'metric_head_index' => $land[ 'metric_head_index' ],
+					'metric_body_index' => $land[ 'metric_body_index' ],
+					'metric_head_thanks' => $land[ 'metric_head_thanks' ],
+					'metric_body_thanks' => $land[ 'metric_body_thanks' ],
+					'script_active' => $land[ 'script_active' ],
+					'script_country' => $land[ 'script_country' ],
+					'script_sex' => $land[ 'script_sex' ],
+					'script_windows' => $land[ 'script_windows' ],
+					'script_items' => $land[ 'script_items' ],
 				);
 
 				// upsells

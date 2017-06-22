@@ -27,6 +27,20 @@ class ApiController {
 	}
 
 	public function updateLand() {
+		// replace all ' with " cause it breaks file system
+		$values = array();
+		foreach ( $_GET as $key => $value ) {
+			$values[ $key ] = preg_replace( '/\'/', '"', $value );
+		}
+
+		$result = $this->lands->update( $_GET[ 'id' ], $values );
+		$result === false ? false : true;
+
+		echo json_encode( array( 'success' => $result ) );
+		die();
+	}
+
+	public function updateLandUpsells() {
 		$values = array();
 
 		$values[ 'name' ] = isset( $_GET[ 'name' ] ) ? $_GET[ 'name' ] : '';
@@ -40,7 +54,21 @@ class ApiController {
 			$values[ 'upsell_hit' ] = '';
 		}
 
-		$values[ 'layer_target' ] = isset( $_GET[ 'layer_target' ] ) ? $_GET[ 'layer_target' ] : '';
+		$result = $this->lands->update( $_GET[ 'id' ], $values );
+		$result === false ? false : true;
+
+		echo json_encode( array( 'success' => $result ) );
+		die();
+	}
+
+	public function updateLandScript() {
+		$values = array();
+
+		if ( isset( $_GET[ 'script_active' ] ) ) {
+			$values[ 'script_active' ] = 'on';
+		} else {
+			$values[ 'script_active' ] = 'off';
+		}
 
 		$result = $this->lands->update( $_GET[ 'id' ], $values );
 		$result === false ? false : true;

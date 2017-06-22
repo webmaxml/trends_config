@@ -22,7 +22,15 @@ class FrontController {
 
 	public function getRoot() {
 		if ( $this->user->isLogged() ) {
-			require 'views/lands.php';
+			require 'views/prices.php';
+		} else {
+			require 'views/login.php';
+		}
+	}
+
+	public function getLandUpsells() {
+		if ( $this->user->isLogged() ) {
+			require 'views/landUpsells.php';
 		} else {
 			require 'views/login.php';
 		}
