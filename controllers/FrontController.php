@@ -18,6 +18,8 @@ class FrontController {
 		$this->upsells = Upsells::getInstance();
 		$this->images = Images::getInstance();
 		$this->lands = Lands::getInstance();
+		$this->seller = Seller::getInstance();
+		$this->order = Order::getInstance();
 	}
 
 	public function getRoot() {
@@ -71,6 +73,22 @@ class FrontController {
 	public function getAbtest() {
 		if ( $this->user->isLogged() ) {
 			require 'views/abtest.php';
+		} else {
+			require 'views/login.php';
+		}
+	}
+
+	public function getSeller() {
+		if ( $this->user->isLogged() ) {
+			require 'views/seller.php';
+		} else {
+			require 'views/login.php';
+		}
+	}
+
+	public function getOrderData() {
+		if ( $this->user->isLogged() ) {
+			require 'views/orderData.php';
 		} else {
 			require 'views/login.php';
 		}
@@ -166,6 +184,28 @@ class FrontController {
 			header( "Location: " . $config[ 'base_url' ] . '/abtest?test_status=1' );
 			exit;
 		} 
+	}
+
+	public function updateSeller() {
+		$result = $this->seller->update( $_POST );
+
+		if ( $result === false ) {
+			echo 'Произошла ошибка при записи данных!';
+		} else {
+			header( "Location: " . $config[ 'base_url' ] . '/seller' );
+			exit;
+		}
+	}
+
+	public function updateOrder() {
+		$result = $this->order->update( $_POST );
+
+		if ( $result === false ) {
+			echo 'Произошла ошибка при записи данных!';
+		} else {
+			header( "Location: " . $config[ 'base_url' ] . '/orderData' );
+			exit;
+		}
 	}
 
 }

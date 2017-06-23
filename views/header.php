@@ -24,7 +24,7 @@
                         <div class="menu_section">
                             <ul class="nav side-menu">
                                 <li><a>
-                                        <i class="fa fa-picture-o"></i> Лендинги 
+                                        <i class="fa fa-sitemap"></i> Лендинги 
                                         <span class="fa fa-chevron-down"></span>
                                     </a>
                                     <ul class="nav child_menu">
@@ -43,7 +43,7 @@
                                     </ul>
                                 </li>
                                 <li><a>
-                                        <i class="fa fa-picture-o"></i> Допродажи 
+                                        <i class="fa fa-cart-plus"></i> Допродажи 
                                         <span class="fa fa-chevron-down"></span>
                                     </a>
                                     <ul class="nav child_menu">
@@ -55,6 +55,19 @@
                                         </li>
                                         <li>
                                             <a href="/image-upload">Загрузить изображения</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><a>
+                                        <i class="fa fa-gear"></i> Настройки 
+                                        <span class="fa fa-chevron-down"></span>
+                                    </a>
+                                    <ul class="nav child_menu">
+                                        <li>
+                                            <a href="/seller">Продавец</a>
+                                        </li>
+                                        <li>
+                                            <a href="/orderData">Заказы</a>
                                         </li>
                                     </ul>
                                 </li>

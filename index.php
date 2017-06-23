@@ -4,10 +4,13 @@ if ( session_status() == PHP_SESSION_NONE ) { session_start(); }
 // classes
 require 'classes/AltoRouter.php';
 require 'classes/FileDB.php';
+require 'classes/ApiManager.php';
+require 'classes/Order.php';
 require 'classes/User.php';
 require 'classes/Lands.php';
 require 'classes/Images.php';
 require 'classes/Upsells.php';
+require 'classes/Seller.php';
 // controllers
 require 'controllers/FrontController.php';
 require 'controllers/ApiController.php';
@@ -49,6 +52,14 @@ $router->map( 'GET', '/abtest', function() {
 	FrontController::getInstance()->getAbtest();
 } );
 
+$router->map( 'GET', '/seller', function() {
+	FrontController::getInstance()->getSeller();
+} );
+
+$router->map( 'GET', '/orderData', function() {
+	FrontController::getInstance()->getOrderData();
+} );
+
 
 // actions
 $router->map( 'POST', '/login', function() {
@@ -77,6 +88,14 @@ $router->map( 'POST', '/test-create', function() {
 
 $router->map( 'POST', '/layer-create', function() {
 	FrontController::getInstance()->createLayer();
+} );
+
+$router->map( 'POST', '/seller-update', function() {
+	FrontController::getInstance()->updateSeller();
+} );
+
+$router->map( 'POST', '/order-update', function() {
+	FrontController::getInstance()->updateOrder();
 } );
 
 
@@ -139,7 +158,7 @@ $router->map( 'GET', '/image-delete', function() {
 
 
 $router->map( 'GET', '/api', function() {
-	ApiController::getInstance()->getLandOutsourceData();
+	ApiController::getInstance()->getDataForUrl();
 } );
 
 

@@ -269,11 +269,54 @@ require 'header.php'
                     <input type="hidden" id="scriptLandId" name="id">
 
                     <div class="form-group">
-                        <label for="scriptActiveCheckbox" class="control-label col-md-2 col-sm-2 col-xs-12">
+                        <label for="scriptActiveCheckbox" class="control-label col-md-3 col-sm-3 col-xs-12">
                             Статус
                         </label>
-                        <div class="col-md-8 col-sm-8 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                             <input id="scriptActiveCheckbox" type="checkbox" class="script__toggle" name="script_active">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="scriptCountry" class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Страна
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <select id="scriptCountry" class="form-control" name="script_country">
+                                <option value="ua">Украина</option>
+                                <option value="ru">Россия</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="scriptSex" class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Пол
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <select id="scriptSex" class="form-control" name="script_sex">
+                                <option value="m">Мужчины</option>
+                                <option value="w">Женщины</option>
+                                <option value="all">Все</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="scriptWindows" class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Кол-во окон
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="number" id="scriptWindows" class="form-control" name="script_windows">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="scriptItems" class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Кол-во товара
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="number" id="scriptItems" class="form-control" name="script_items">
                         </div>
                     </div>
 

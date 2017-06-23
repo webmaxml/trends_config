@@ -222,6 +222,10 @@ $( function() {
 							data.script_active !== 'on' && checkbox.checked ) {
 							$( checkbox ).trigger( 'click' );
 						} 
+						$( '#scriptCountry' ).val( data.script_country );
+						$( '#scriptSex' ).val( data.script_sex );
+						$( '#scriptWindows' ).val( data.script_windows );
+						$( '#scriptItems' ).val( data.script_items );
 					},
 					error: function( xhr, status, error ) {
 						new PNotify({

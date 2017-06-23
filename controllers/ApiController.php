@@ -17,6 +17,7 @@ class ApiController {
 		$this->lands = Lands::getInstance();
 		$this->upsells = Upsells::getInstance();
 		$this->images = Images::getInstance();
+		$this->apiManager = ApiManager::getInstance();
 	}
 
 	public function getLandData() {
@@ -69,6 +70,11 @@ class ApiController {
 		} else {
 			$values[ 'script_active' ] = 'off';
 		}
+
+		$values[ 'script_country' ] = isset( $_GET[ 'script_country' ] ) ? $_GET[ 'script_country' ] : '';
+		$values[ 'script_sex' ] = isset( $_GET[ 'script_sex' ] ) ? $_GET[ 'script_sex' ] : '';
+		$values[ 'script_windows' ] = isset( $_GET[ 'script_windows' ] ) ? $_GET[ 'script_windows' ] : '';
+		$values[ 'script_items' ] = isset( $_GET[ 'script_items' ] ) ? $_GET[ 'script_items' ] : '';
 
 		$result = $this->lands->update( $_GET[ 'id' ], $values );
 		$result === false ? false : true;
@@ -168,8 +174,8 @@ class ApiController {
 		die();
 	}
 
-	public function getLandOutsourceData() {
-		$result = $this->lands->getOutsourceData( $_GET[ 'host' ] );
+	public function getDataForUrl() {
+		$result = $this->apiManager->getDataForUrl( $_GET[ 'host' ] );
 
 		echo json_encode( $result );
 		die();

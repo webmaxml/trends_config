@@ -30,12 +30,17 @@ class FileDB {
 		require $filepath;
 
 		$updated = array();
-		foreach ( $content as $item ) {
-			if ( $item[ 'id' ] === (string) $id ) {
-				$updated[] = array_merge( $item, $values );
-			} else {
-				$updated[] = $item;
+
+		if ( $id ) {
+			foreach ( $content as $item ) {
+				if ( $item[ 'id' ] === (string) $id ) {
+					$updated[] = array_merge( $item, $values );
+				} else {
+					$updated[] = $item;
+				}
 			}
+		} else {
+			$updated = array_merge( $content, $values );
 		}
 
 		$text = $this->formText( $updated );
