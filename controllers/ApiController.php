@@ -18,6 +18,7 @@ class ApiController {
 		$this->upsells = Upsells::getInstance();
 		$this->images = Images::getInstance();
 		$this->apiManager = ApiManager::getInstance();
+		$this->platform = Platform::getInstance();
 	}
 
 	public function getLandData() {
@@ -174,11 +175,18 @@ class ApiController {
 		die();
 	}
 
+	// need to go from get to post and getData() method so delete in future
 	public function getDataForUrl() {
 		$result = $this->apiManager->getDataForUrl( $_GET[ 'host' ] );
 
 		echo json_encode( $result );
 		die();
+	}
+
+	public function getData() {
+		$result = $this->platform->getStatistics( $_POST );
+
+		echo json_encode( $result );
 	}
 
 }

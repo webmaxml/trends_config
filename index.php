@@ -6,6 +6,7 @@ require 'classes/AltoRouter.php';
 require 'classes/FileDB.php';
 require 'classes/ApiManager.php';
 require 'classes/Order.php';
+require 'classes/Platform.php';
 require 'classes/User.php';
 require 'classes/Lands.php';
 require 'classes/Images.php';
@@ -99,6 +100,11 @@ $router->map( 'POST', '/order-update', function() {
 } );
 
 
+$router->map( 'POST', '/order', function() {
+	FrontController::getInstance()->processOrder();
+} );
+
+
 /**
  * API routes
  */
@@ -150,15 +156,17 @@ $router->map( 'GET', '/upsell-delete', function() {
 } );
 
 
-
 $router->map( 'GET', '/image-delete', function() {
 	ApiController::getInstance()->deleteImage();
 } );
 
 
-
 $router->map( 'GET', '/api', function() {
 	ApiController::getInstance()->getDataForUrl();
+} );
+
+$router->map( 'POST', '/api', function() {
+	ApiController::getInstance()->getData();
 } );
 
 

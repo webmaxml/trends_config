@@ -208,6 +208,35 @@ class FrontController {
 		}
 	}
 
+	public function processOrder() {
+		if ( empty( $_POST[ 'id' ] ) || 
+			 empty( $_POST[ 'ip' ] ) ||
+			 empty( $_POST[ 'host' ] ) ||
+			 empty( $_POST[ 'name' ] ) ||
+			 empty( $_POST[ 'phone' ] ) ) {
+			echo 'Передача неполных данных';
+		} else {
+			$values = [];
+			foreach ( $_POST as $key => $value ) {
+				$values[ $key ] = htmlspecialchars( $value );
+			}
+
+			$orderData = $this->order->formOrderData( $values );
+			$result = $this->order->sendOrder( $orderData );
+
+			if ( $result->status === 'ok' ) {
+				header( 'Location: http://' . $values[ 'host' ] . '/form-ok.php' );
+				die();
+			} else {
+				echo '<pre>';
+				print_r( $result->status );
+				echo '</pre>';
+			}
+
+		}
+		
+	}
+
 }
 
 ?>

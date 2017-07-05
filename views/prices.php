@@ -100,8 +100,9 @@ require 'header.php'
                                     </td>
                                 </tr>
 
-                            <? } ?>                  
-                        </tbody>
+                            <? } ?>  
+                                            
+                     </tbody>
                     </table>
                     <!-- END TABLE -->
 

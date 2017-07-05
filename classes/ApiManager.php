@@ -27,6 +27,7 @@ class ApiManager {
 			if ( $land[ 'url' ] === $url ) {
 
 				$data = array(
+					'id' => $land[ 'id' ],
 					'product' => $land[ 'product' ],
 					'hit' => $land[ 'upsell_hit' ],
 					'price1' => $land[ 'price1' ],

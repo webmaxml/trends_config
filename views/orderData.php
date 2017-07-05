@@ -54,11 +54,11 @@ require 'header.php'
                                     <option value="auto"
                                         <? if ( $order_country === 'auto' ) { echo 'selected'; } ?>
                                     >Авто ( по ip посетителя )</option>
-                                    <option value="ua"
-                                        <? if ( $order_country === 'ua' ) { echo 'selected'; } ?>
+                                    <option value="UA"
+                                        <? if ( $order_country === 'UA' ) { echo 'selected'; } ?>
                                     >Украина</option>
-                                    <option value="ru"
-                                        <? if ( $order_country === 'ru' ) { echo 'selected'; } ?>
+                                    <option value="RU"
+                                        <? if ( $order_country === 'RU' ) { echo 'selected'; } ?>
                                     >Россия</option>
                                 </select>
                             </div>
