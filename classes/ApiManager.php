@@ -18,16 +18,18 @@ class ApiManager {
 		$this->upsells = Upsells::getInstance();
 		$this->images = Images::getInstance();
 		$this->seller = Seller::getInstance();
+		$this->platform = Platform::getInstance();
 	}
 
-	public function getDataForUrl( $url ) {
+	public function getDataForUrl( $input ) {
 		$lands = $this->lands->getLandsData();
 
 		foreach( $lands as $land ) {
-			if ( $land[ 'url' ] === $url ) {
+			if ( $land[ 'url' ] === $input[ 'host' ] ) {
 
 				$data = array(
 					'id' => $land[ 'id' ],
+					'title' => '',
 					'product' => $land[ 'product' ],
 					'hit' => $land[ 'upsell_hit' ],
 					'price1' => $land[ 'price1' ],
@@ -96,12 +98,35 @@ class ApiManager {
 				} else {
 					$data[ 'layer_target' ] = $land[ 'layer_target' ];
 				}
+
+				if ( !empty( $input[ 'transit_url' ] ) ) {
+					$data[ 'layer_target' ] = $input[ 'transit_url' ];
+				}
+
+				// seller
+				$seller_data = $this->seller->getData();
+				$data[ 'seller_name' ] = $seller_data[ 'name' ];
+				$data[ 'seller_address' ] = $seller_data[ 'address' ];
+				$data[ 'seller_phone1' ] = $seller_data[ 'phone1' ];
+				$data[ 'seller_phone2' ] = $seller_data[ 'phone2' ];
+				$data[ 'seller_email' ] = $seller_data[ 'email' ];
 			
 				return $data;
 			}
 		}
 
 		return false;
+	}
+
+	public function getDataWithPlatform( $input, $platform_data ) {
+		$data = $this->getDataForUrl( $input );
+
+		if ( $data ) {
+			$data[ 'title' ] = $platform_data[ 'title' ];
+			$data[ 'price1' ] = $platform_data[ 'price' ];
+		}
+
+		return $data;
 	}
 
 }

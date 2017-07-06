@@ -69,6 +69,9 @@
                                         <li>
                                             <a href="/orderData">Заказы</a>
                                         </li>
+                                        <li>
+                                            <a href="/platformData">Дропплатформа</a>
+                                        </li>
                                     </ul>
                                 </li>
                             </ul>

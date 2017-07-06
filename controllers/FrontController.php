@@ -20,6 +20,7 @@ class FrontController {
 		$this->lands = Lands::getInstance();
 		$this->seller = Seller::getInstance();
 		$this->order = Order::getInstance();
+		$this->platform = Platform::getInstance();
 	}
 
 	public function getRoot() {
@@ -89,6 +90,14 @@ class FrontController {
 	public function getOrderData() {
 		if ( $this->user->isLogged() ) {
 			require 'views/orderData.php';
+		} else {
+			require 'views/login.php';
+		}
+	}
+
+	public function getPlatformData() {
+		if ( $this->user->isLogged() ) {
+			require 'views/platform.php';
 		} else {
 			require 'views/login.php';
 		}
@@ -208,33 +217,15 @@ class FrontController {
 		}
 	}
 
-	public function processOrder() {
-		if ( empty( $_POST[ 'id' ] ) || 
-			 empty( $_POST[ 'ip' ] ) ||
-			 empty( $_POST[ 'host' ] ) ||
-			 empty( $_POST[ 'name' ] ) ||
-			 empty( $_POST[ 'phone' ] ) ) {
-			echo 'Передача неполных данных';
+	public function updatePlatform() {
+		$result = $this->platform->update( $_POST );
+
+		if ( $result === false ) {
+			echo 'Произошла ошибка при записи данных!';
 		} else {
-			$values = [];
-			foreach ( $_POST as $key => $value ) {
-				$values[ $key ] = htmlspecialchars( $value );
-			}
-
-			$orderData = $this->order->formOrderData( $values );
-			$result = $this->order->sendOrder( $orderData );
-
-			if ( $result->status === 'ok' ) {
-				header( 'Location: http://' . $values[ 'host' ] . '/form-ok.php' );
-				die();
-			} else {
-				echo '<pre>';
-				print_r( $result->status );
-				echo '</pre>';
-			}
-
+			header( "Location: " . $config[ 'base_url' ] . '/platformData' );
+			exit;
 		}
-		
 	}
 
 }

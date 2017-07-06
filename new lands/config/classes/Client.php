@@ -4,14 +4,70 @@ class Client {
 	public function __construct() {
 	}
 
-	public function detectClientInfo() {
+	public function setClientData() {
+		$this->setUserCookie();
+
 		$this->device = $this->isMobile() ? 'Мобильный' : 'Стационарный';
 		$this->ip = $this->getUserIP();
 		$this->country = $this->tabgeo_country_v4( $this->ip );
 		$this->agent = $_SERVER[ 'HTTP_USER_AGENT' ];
+		$this->agent_for_platform = $this->agent . $this->ip . $this->cookie; 
 		$this->browser = $this->getBrowser( $this->agent );
 		$this->os = $this->getOS( $this->agent );
+
+		$this->uid = $this->setUid();
+		$this->utm = $this->utm();
 	}
+
+	private function setUserCookie() {
+        $cookie_name = 'drop';
+
+        if ( isset( $_COOKIE[ $cookie_name ] ) !== false ) {
+            $this->cookie = $_COOKIE[ $cookie_name ];
+        } else {
+            $value = md5( microtime() );
+            setcookie( $cookie_name, $value, strtotime('tomorrow') );
+            $this->cookie = $value;
+        }
+    }
+
+    private function setUid() {
+        if ( isset( $_GET['uid'] ) && $_GET['uid'] != '' ) {
+            $uid = $this->filter( $_GET['uid'] );
+
+            setcookie( 'uid', $uid, time() + 60 * 60 * 24 * 30 );
+
+            return $uid;
+        } else {
+            if ( isset( $_COOKIE['uid'] ) && $_COOKIE['uid'] != '' ) {
+                return $this->filter( $_COOKIE['uid'] );
+            } else {
+                return false;
+            }
+        }
+    }
+
+    private function utm() {
+        $utms = [
+            'utm_source',
+            'utm_medium',
+            'utm_term',
+            'utm_content',
+            'utm_campaign',
+        ];
+
+        $data = [];
+
+        foreach ( $utms as $utm ) {
+            $data[ $utm ] = ( isset( $_GET[ $utm ] ) && $_GET[ $utm ] != '' ) ? $this->filter( $_GET[$utm] ) : '';
+        }
+
+        return $data;
+    }
+
+    private function filter( $value ) {
+    	return preg_replace( "/[^a-zA-Z0-9_]+/", "", $value );
+    }
 
 	private function isMobile() {
 		#Определяем пренадлежность браузера к мобильным устройствам

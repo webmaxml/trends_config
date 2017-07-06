@@ -15,6 +15,7 @@ require 'classes/Seller.php';
 // controllers
 require 'controllers/FrontController.php';
 require 'controllers/ApiController.php';
+require 'controllers/LandController.php';
 // config
 require 'data/config.php';
 
@@ -61,6 +62,9 @@ $router->map( 'GET', '/orderData', function() {
 	FrontController::getInstance()->getOrderData();
 } );
 
+$router->map( 'GET', '/platformData', function() {
+	FrontController::getInstance()->getPlatformData();
+} );
 
 // actions
 $router->map( 'POST', '/login', function() {
@@ -99,9 +103,8 @@ $router->map( 'POST', '/order-update', function() {
 	FrontController::getInstance()->updateOrder();
 } );
 
-
-$router->map( 'POST', '/order', function() {
-	FrontController::getInstance()->processOrder();
+$router->map( 'POST', '/platform-update', function() {
+	FrontController::getInstance()->updatePlatform();
 } );
 
 
@@ -166,7 +169,11 @@ $router->map( 'GET', '/api', function() {
 } );
 
 $router->map( 'POST', '/api', function() {
-	ApiController::getInstance()->getData();
+	LandController::getInstance()->getData();
+} );
+
+$router->map( 'POST', '/order', function() {
+	LandController::getInstance()->processOrder();
 } );
 
 

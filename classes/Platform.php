@@ -5,9 +5,6 @@ class Platform {
 
 	private static $instance;
 
-	private $url = 'http://alltrends.biz/api/cpa';
-    private $api_key = 'base64:RDE8gd6Lydf/KduN4ofRiHjadZCr7ySe2qIJHOlmD14=';
-
 	public static function getInstance() {
 		if ( !isset( self::$instance ) ) {
 			self::$instance = new self;
@@ -17,14 +14,25 @@ class Platform {
 	}
 
 	private function __construct() {
-		
+		$this->db = FileDB::getInstance();
+	}
+
+	public function update( $values ) {
+		return $this->db->update( 'platform', false, $values );
+	}
+
+	public function getData() {
+		require 'data/platform.php';
+		return $content;
 	}
 
 	public function getStatistics( $data ) {
-		$data[ 'api_key' ] = $this->api_key;
+		$platform_data = $this->getData();
+
+		$data[ 'api_key' ] = $platform_data[ 'key' ];
 
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $this->url . '/statistics' );
+        curl_setopt($ch, CURLOPT_URL, $platform_data[ 'url' ] . '/statistics' );
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

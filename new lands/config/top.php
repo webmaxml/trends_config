@@ -11,7 +11,6 @@ require 'classes/OrderForm.php';
 require 'classes/Transit.php';
 require 'classes/Upsells.php';
 require 'classes/OrdersWidget.php';
-require 'classes/Platform.php';
 
 $controller = new ConfigController();
 $controller->init();

@@ -3,23 +3,28 @@ class OrderForm {
 
 	public function __construct( $client ) {
 		$this->client = $client;
+
 		$this->hidden_input = '';
 	}
 
 	public function init( $data ) {
-		$this->setHiddenInput( $data->id );
+		$this->setHiddenInput( $data );
 	}
 
-	private function setHiddenInput( $land_id ) {
-	    $inputs = '<input type="hidden" name="id" value="' . $land_id . '">';
+	private function setHiddenInput( $data ) {
+	    $inputs = '<input type="hidden" name="land_id" value="' . $data->id . '">';
 	    $inputs .= '<input type="hidden" name="ip" value="' . $this->client->ip . '">';
 	    $inputs .= '<input type="hidden" name="host" value="' . $_SERVER[ 'SERVER_NAME' ] . '">';
 	    $inputs .= '<input type="hidden" name="country" value="' . $this->client->country . '">';
-	    $inputs .= '<input type="hidden" name="utm_source" value="' . $_GET[ 'utm_source' ] . '">';
-	    $inputs .= '<input type="hidden" name="utm_medium" value="' . $_GET[ 'utm_medium' ] . '">';
-	    $inputs .= '<input type="hidden" name="utm_term" value="' . $_GET[ 'utm_term' ] . '">';
-	    $inputs .= '<input type="hidden" name="utm_content" value="' . $_GET[ 'utm_content' ] . '">';
-	    $inputs .= '<input type="hidden" name="utm_campaign" value="' . $_GET[ 'utm_campaign' ] . '">';
+	    $inputs .= '<input type="hidden" name="uid" value="' . $this->client->uid . '">';
+
+	    foreach ( $this->client->utm as $key => $value ) {
+	    	$inputs .= '<input type="hidden" name="'. $key .'" value="'. $value .'">';
+	    }
+
+	    $inputs .= '<input type="hidden" name="user_agent" value="' . $this->client->agent_for_platform . '">';
+	    $inputs .= '<input type="hidden" name="title" value="' . $data->title . '">';
+	    $inputs .= '<input type="hidden" name="price" value="' . $data->price1 . '">';
 
 	    $this->hidden_input = $inputs;
 	}

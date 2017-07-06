@@ -9,7 +9,6 @@ class ConfigController {
 		$this->transit = new Transit();
 		$this->upsells = new Upsells( $this->mainVars );
 		$this->ordersWidget = new OrdersWidget( $this->mainVars );
-		$this->platform = new Platform(  $this->client );
 
 		$this->templateVars = [];
 	}
@@ -17,11 +16,12 @@ class ConfigController {
 	public function init() {
 		global $isIndex;
 
-		// detect client info
-		$this->client->detectClientInfo();
+		// set client data
+		$this->client->setClientData();
 
-		// get data from Config
-		$data = $this->retrieveData();
+		// get data from config
+		$data_for_config = $this->getDataForConfig();
+		$data = $this->request->getConfigData( $data_for_config );
 
 		// debug
 		echo '<pre>';
@@ -44,8 +44,8 @@ class ConfigController {
 		$this->orderForm->init( $data );
 
 		// transit
-		if ( $data->layer === 'true' && !empty( $data->layer_target ) ) {
-			$this->transit->getTargetUrl( $data->layer_target, 'utm_medium' );
+		if ( !empty( $data->layer_target ) ) {
+			$this->transit->setTargetUrl( $data->layer_target, 'utm_medium' );
 		} 
 
 		// upsells
@@ -64,18 +64,21 @@ class ConfigController {
 		$this->setTemplateVars( $data );
 	}
 
-	private function retrieveData() {
-
-		// platform uid and cookie set
-		$this->platform->init();
-
+	private function getDataForConfig() {
 		$data = [
 			'host' => 'http://' . $_SERVER[ 'HTTP_HOST' ] . '/',
+			'uid' => $this->client->uid,
+			'ip' => $this->client->ip,
+			'user_agent' => $this->client->agent_for_platform,
+			'utm_source' => $this->client->utm[ 'utm_source' ],
+            'utm_medium' => $this->client->utm[ 'utm_medium' ],
+            'utm_term' => $this->client->utm[ 'utm_term' ],
+            'utm_content' => $this->client->utm[ 'utm_content' ],
+            'utm_campaign' => $this->client->utm[ 'utm_campaign' ],
+            'transit_url' => isset( $_GET[ 'url' ] ) ? $_GET[ 'url' ] : '',
 		];
 
-		$data += $this->platform->getDataForConfig();
-
-		return $this->request->getConfigData( $data );
+		return $data;
 	}
 
 	private function setTemplateVars( $data ) {
