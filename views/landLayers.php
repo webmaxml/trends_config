@@ -48,7 +48,7 @@ require 'header.php'
                                 <th style="text-align: center; vertical-align: middle;">Название</th>
                                 <th style="text-align: center; vertical-align: middle;">URL</th>
                                 <th style="text-align: center; vertical-align: middle;">На лендинг</th>
-                                <th style="text-align: center; vertical-align: middle;">Редактировать</th>
+                                <th style="text-align: center; vertical-align: middle;"><i class="fa fa-gears"></i></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -116,22 +116,17 @@ require 'header.php'
                 <form class="form-horizontal form-label-left" action="/layer-create" method="post">
 
                     <div class="form-group">
-                        <label for="layerName" class="control-label col-md-3 col-sm-3 col-xs-12">
-                            Название
+                        <label for="layerEntry" class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Прокладка
                             <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" class="form-control" name="name" id="layerName" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="layerUrl" class="control-label col-md-3 col-sm-3 col-xs-12">
-                            URL
-                            <span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="url" id="layerUrl" class="form-control col-md-7 col-xs-12" name="url" required>
+                            <select id="layerEntry" class="select2_group form-control col-md-7 col-xs-12" name="layer" style="width: 100%;" required>
+                                <? foreach ( Lands::getInstance()->getLandsData() as $land ) { ?>
+                                    <? if ( $land[ 'layer' ] === 'true' ) { continue; } ?> 
+                                    <option value="<?= $land[ 'id' ] ?>"><?= $land[ 'name' ] ?></option>
+                                <? } ?>                      
+                            </select>
                         </div>
                     </div>
 
@@ -142,18 +137,10 @@ require 'header.php'
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <select id="layerTarget" class="select2_group form-control col-md-7 col-xs-12" name="target" style="width: 100%;" required>
-                                <optgroup label="Лендинги">
-                                    <? foreach ( Lands::getInstance()->getLandsData() as $land ) { ?>
-                                        <? if ( $land[ 'layer' ] === 'true' ) { continue; } ?> 
-                                        <option value="<?= $land[ 'id' ] ?>"><?= $land[ 'name' ] ?></option>
-                                    <? } ?>        
-                                </optgroup>
-                                <optgroup label="Прокладки">
-                                    <? foreach ( Lands::getInstance()->getLandsData() as $land ) { ?>
-                                        <? if ( $land[ 'layer' ] === 'false' ) { continue; } ?> 
-                                        <option value="<?= $land[ 'id' ] ?>"><?= $land[ 'name' ] ?></option>
-                                    <? } ?>        
-                                </optgroup>                    
+                                <? foreach ( Lands::getInstance()->getLandsData() as $land ) { ?>
+                                    <? if ( $land[ 'layer' ] === 'true' ) { continue; } ?> 
+                                    <option value="<?= $land[ 'id' ] ?>"><?= $land[ 'name' ] ?></option>
+                                <? } ?>                      
                             </select>
                         </div>
                     </div>
@@ -189,42 +176,15 @@ require 'header.php'
                     <input type="hidden" id="layerId2" name="id">
 
                     <div class="form-group">
-                        <label for="layerName2" class="control-label col-md-3 col-sm-3 col-xs-12">
-                            Название
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" class="form-control" name="name" id="layerName2">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="layerUrl2" class="control-label col-md-3 col-sm-3 col-xs-12">
-                            URL
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="url" id="layerUrl2" class="form-control col-md-7 col-xs-12" name="url">
-                        </div>
-                    </div>
-
-
-                    <div class="form-group">
                         <label for="layerTarget2" class="control-label col-md-3 col-sm-3 col-xs-12">
                             На лендинг
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <select id="layerTarget2" class="select2_group form-control col-md-7 col-xs-12" name="layer_target" style="width: 100%;">
-                                <optgroup label="Лендинги">
-                                    <? foreach ( Lands::getInstance()->getLandsData() as $land ) { ?>
-                                        <? if ( $land[ 'layer' ] === 'true' ) { continue; } ?> 
-                                        <option value="<?= $land[ 'id' ] ?>"><?= $land[ 'name' ] ?></option>
-                                    <? } ?>        
-                                </optgroup>
-                                <optgroup label="Прокладки">
-                                    <? foreach ( Lands::getInstance()->getLandsData() as $land ) { ?>
-                                        <? if ( $land[ 'layer' ] === 'false' ) { continue; } ?> 
-                                        <option value="<?= $land[ 'id' ] ?>"><?= $land[ 'name' ] ?></option>
-                                    <? } ?>        
-                                </optgroup>  
+                                <? foreach ( Lands::getInstance()->getLandsData() as $land ) { ?>
+                                    <? if ( $land[ 'layer' ] === 'true' ) { continue; } ?> 
+                                    <option value="<?= $land[ 'id' ] ?>"><?= $land[ 'name' ] ?></option>
+                                <? } ?>        
                             </select>
                         </div>
                     </div>
@@ -232,7 +192,7 @@ require 'header.php'
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                             <button type="submit" class="btn btn-primary">Обновить</button>
-                            <button type="button" id="deleteLayerBtn" class="btn btn-danger">Удалить</button>
+                            <button type="button" id="deleteLayerBtn" class="btn btn-danger">Отключить</button>
                         </div>
                     </div>
 

@@ -1,5 +1,113 @@
 $( function() {
 
+	// BEGIN PRODUCT-UPDATE
+	if ( document.getElementById( 'productConfigForm' ) ) {
+		(function(){
+
+			var $form = $( '#productConfigForm' );
+			var $configButtons = $( '.products__config-btn' );
+			var $deleteButton = $( '#deleteProductBtn' );
+
+			$configButtons.on( 'click', function( e ) {
+				var productId = $( this ).data( 'product-id' );
+
+				$.ajax({
+					method: 'get',
+					url: globalData.ajaxUrl + '/product-data',
+					dataType: 'json',
+					data: {
+						id: productId
+					},
+					success: function( data, status, xhr ) {
+						$( '#productConfigTitle' ).text( 'Редактировать ' + data.name );
+						$( '#productConfigId' ).val( data.id );
+						$( '#productName2' ).val( data.name );
+						$( '#productId2' ).val( data.crm_id );
+
+						$deleteButton.data( 'product-id', data.id );
+					},
+					error: function( xhr, status, error ) {
+						new PNotify({
+							title: 'Ошибка',
+							text: error,
+							type: 'error',
+							styling: 'bootstrap3'
+						});	
+					}
+				});
+
+			} );
+
+			$form.on( 'submit', function( e ) {
+				e.preventDefault();
+
+				var $configForm = $( this );
+
+				$.ajax({
+					method: 'get',
+					url: globalData.ajaxUrl + '/product-update',
+					dataType: 'json',
+					data: $configForm.serialize(),
+					success: function( data, status, xhr ) {
+						if ( data.success ) {
+							document.location.reload( true );
+						} else {
+							new PNotify({
+								title: 'Ошибка',
+								text: 'Товар по какой-то причине не был обновлен!',
+								type: 'error',
+								styling: 'bootstrap3'
+							});	
+						}
+					},
+					error: function( xhr, status, error ) {
+						new PNotify({
+							title: 'Ошибка',
+							text: error,
+							type: 'error',
+							styling: 'bootstrap3'
+						});	
+					}
+				});
+
+			} );
+
+			$deleteButton.on( 'click', function( e ) {
+				e.preventDefault();
+				var productId = $( this ).data( 'product-id' );
+
+				$.ajax({
+					method: 'get',
+					url: globalData.ajaxUrl + '/product-delete',
+					dataType: 'json',
+					data: { id: productId },
+					success: function( data, status, xhr ) {
+						if ( data.success ) {
+							document.location.reload( true );
+						} else {
+							new PNotify({
+								title: 'Ошибка',
+								text: 'Товар по какой-то причине не был удален!',
+								type: 'error',
+								styling: 'bootstrap3'
+							});	
+						}
+					},
+					error: function( xhr, status, error ) {
+						new PNotify({
+							title: 'Ошибка',
+							text: error,
+							type: 'error',
+							styling: 'bootstrap3'
+						});	
+					}
+				});
+			} );
+
+		}());
+	}
+	// END PRODUCT-UPDATE
+
 	// BEGIN LAND-DATA-UPDATE
 	if ( document.getElementById( 'landDataConfigForm' ) ) {
 		(function(){
@@ -23,7 +131,6 @@ $( function() {
 						$( '#landDataId' ).val( data.id );
 						$( '#landDataName' ).val( data.name );
 						$( '#landDataUrl' ).val( data.url );
-						$( '#landDataProductId' ).val( data.product_id );
 						$( '#landDataProduct' ).val( data.product );
 						$( '#landDataPrice1' ).val( data.price1 );
 						$( '#landDataPrice2' ).val( data.price2 );
@@ -757,8 +864,6 @@ $( function() {
 					success: function( data, status, xhr ) {
 						$( '#layerConfigTitle' ).text( 'Редактировать прокладку ' + data.name );
 						$( '#layerId2' ).val( data.id );
-						$( '#layerName2' ).val( data.name );
-						$( '#layerUrl2' ).val( data.url );
 						$( '#layerTarget2' ).val( data.layer_target ).trigger('change.select2');
 						$deleteButton.data( 'land-id', data.id );						
 					},
@@ -814,7 +919,7 @@ $( function() {
 
 				$.ajax({
 					method: 'get',
-					url: globalData.ajaxUrl + '/land-delete',
+					url: globalData.ajaxUrl + '/layer-delete',
 					dataType: 'json',
 					data: { id: landId },
 					success: function( data, status, xhr ) {

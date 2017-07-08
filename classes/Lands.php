@@ -19,11 +19,10 @@ class Lands {
 		$this->images = Images::getInstance();
 	}
 
-	public function create( $name, $url, $layer = 'false', $layer_target = '' ) {
+	public function create( $name, $url ) {
 		$this->db->create( 'lands', array(
 			'name' => $name,
 			'url' => $url,
-			'product_id' => '',
 			'product' => '',
 			'price1' => '0',
 			'price2' => '',
@@ -41,8 +40,8 @@ class Lands {
 			'upsell_hit' => '',
 			'upsell_index' => 'on',
 			'upsell_thanks' => 'on',
-			'layer' => $layer,
-			'layer_target' => $layer_target,
+			'layer' => 'false',
+			'layer_target' => '',
 			'ab_test' => 'off',
 			'redirections' => '',
 			'metric_head_index' => '',

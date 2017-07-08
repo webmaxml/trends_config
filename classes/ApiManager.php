@@ -19,6 +19,7 @@ class ApiManager {
 		$this->images = Images::getInstance();
 		$this->seller = Seller::getInstance();
 		$this->platform = Platform::getInstance();
+		$this->products = Products::getInstance();
 	}
 
 	public function getDataForUrl( $input ) {
@@ -30,7 +31,7 @@ class ApiManager {
 				$data = array(
 					'id' => $land[ 'id' ],
 					'title' => '',
-					'product' => $land[ 'product' ],
+					'product' => $this->products->getProductById( $land[ 'product' ] )[ 'name' ],
 					'hit' => $land[ 'upsell_hit' ],
 					'price1' => $land[ 'price1' ],
 					'price2' => $land[ 'price2' ],
@@ -96,9 +97,10 @@ class ApiManager {
 						$data[ 'layer_target' ] = $target[ 'url' ];
 					}
 				} else {
-					$data[ 'layer_target' ] = $land[ 'layer_target' ];
+					$data[ 'layer_target' ] = '';
 				}
 
+				// if it is transit in platform
 				if ( !empty( $input[ 'transit_url' ] ) ) {
 					$data[ 'layer_target' ] = $input[ 'transit_url' ];
 				}

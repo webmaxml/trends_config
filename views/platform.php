@@ -29,10 +29,7 @@ require 'header.php'
                                 Источник данных
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select class="form-control" name="source" id="platformSource" value="<?= $platform_source ?>">
-                                    <option value="auto"
-                                        <? if ( $platform_source === 'auto' ) { echo 'selected'; } ?>
-                                    >Авто ( платформа не доступна/ошибка - берется из конфигуратора )</option>
+                                <select class="form-control" name="source" id="platformSource" value="<?= $platform_source ?>">                                    
                                     <option value="platform"
                                         <? if ( $platform_source === 'platform' ) { echo 'selected'; } ?>
                                     >Дропплатформа</option>

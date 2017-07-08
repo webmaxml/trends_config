@@ -51,15 +51,21 @@ require 'header.php'
                                 <th style="text-align: center; vertical-align: middle;">Хит продаж</th>
                                 <th style="text-align: center; vertical-align: middle;">Допродажа на главной</th>
                                 <th style="text-align: center; vertical-align: middle;">Допродажа на "спасибо"</th>
-                                <th style="text-align: center; vertical-align: middle;">Редактировать</th>
+                                <th style="text-align: center; vertical-align: middle;"><i class="fa fa-gears"></i></th>
                             </tr>
                         </thead>
                         <tbody>
                             <? foreach( Lands::getInstance()->getLandsData() as $land ) { ?>
-                                <? if ( $land[ 'layer' ] === 'true' ) { continue; } ?>
                                 <tr>
                                     <td style="text-align: center; vertical-align: middle;"><?= $land[ 'id' ] ?></td>
-                                    <td style="text-align: center; vertical-align: middle;"><?= $land[ 'name' ] ?></td>
+                                    <td style="text-align: center; vertical-align: middle;">
+                                        <div><?= $land[ 'name' ] ?></div>
+                                        <? 
+                                            if ( $land[ 'layer' ] === 'true' ) { 
+                                                echo '<div><span class="label label-info">Прокладка</span></div>';
+                                            } 
+                                        ?>
+                                    </td>
                                     <td style="text-align: center; vertical-align: middle;">
                                         <a class="config__url-link" href="<?= $land[ 'url' ] ?>" target="_blank">
                                             <?= $land[ 'url' ] ?>     
@@ -250,7 +256,7 @@ require 'header.php'
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                             <button type="submit" class="btn btn-primary">Обновить</button>
-                            <button type="button" id="deleteLandBtn" class="btn btn-danger">Удалить</button>
+                            <button type="button" id="deleteLandBtn" class="btn btn-danger">Удалить лендинг</button>
                         </div>
                     </div>
 

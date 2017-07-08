@@ -47,29 +47,39 @@ require 'header.php'
                                 <th style="text-align: center; vertical-align: middle;">ID</th>
                                 <th style="text-align: center; vertical-align: middle;">Название</th>
                                 <th style="text-align: center; vertical-align: middle;">URL</th>
-                                <th style="text-align: center; vertical-align: middle;">ID продукта</th>
                                 <th style="text-align: center; vertical-align: middle;">Продукт</th>
                                 <th style="text-align: center; vertical-align: middle;">Цены</th>
                                 <th style="text-align: center; vertical-align: middle;">Скидка, %</th>
                                 <th style="text-align: center; vertical-align: middle;">Валюта</th>
                                 <th style="text-align: center; vertical-align: middle;">Метрики</th>
                                 <th style="text-align: center; vertical-align: middle;">Скрипт конверсии</th>
-                                <th style="text-align: center; vertical-align: middle;">Редактировать</th>
+                                <th style="text-align: center; vertical-align: middle;"><i class="fa fa-gears"></i></th>
                             </tr>
                         </thead>
                         <tbody>
                             <? foreach( Lands::getInstance()->getLandsData() as $land ) { ?>
-                                <? if ( $land[ 'layer' ] === 'true' ) { continue; } ?>
+                                
                                 <tr>
                                     <td style="text-align: center; vertical-align: middle;"><?= $land[ 'id' ] ?></td>
-                                    <td style="text-align: center; vertical-align: middle;"><?= $land[ 'name' ] ?></td>
+                                    <td style="text-align: center; vertical-align: middle;">
+                                        <div><?= $land[ 'name' ] ?></div>
+                                        <? 
+                                            if ( $land[ 'layer' ] === 'true' ) { 
+                                                echo '<div><span class="label label-info">Прокладка</span></div>';
+                                            } 
+                                        ?>
+                                    </td>
                                     <td style="text-align: center; vertical-align: middle;">
                                         <a class="config__url-link" href="<?= $land[ 'url' ] ?>" target="_blank">
                                             <?= $land[ 'url' ] ?>     
                                         </a>    
                                     </td>
-                                    <td style="text-align: center; vertical-align: middle;"><?= $land[ 'product_id' ] ?></td>
-                                    <td style="text-align: center; vertical-align: middle;"><?= $land[ 'product' ] ?></td>
+                                    <td style="text-align: center; vertical-align: middle;">
+                                        <?
+                                            $product = Products::getInstance()->getProductById( $land[ 'product' ] );
+                                            echo $product[ 'name' ];
+                                         ?>
+                                    </td>
                                     <td style="text-align: center; vertical-align: middle;">
                                         <? 
                                             for ( $i = 1; $i <= 10; $i++ ) {
@@ -371,20 +381,18 @@ require 'header.php'
                     </div>
 
                     <div class="form-group">
-                        <label for="landDataProductId" class="control-label col-md-3 col-sm-3 col-xs-12">
-                            ID продукта
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" id="landDataProductId" class="form-control col-md-7 col-xs-12" name="product_id">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
                         <label for="landDataProduct" class="control-label col-md-3 col-sm-3 col-xs-12">
                             Продукт
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" id="landDataProduct" class="form-control col-md-7 col-xs-12" name="product">
+                            <select id="landDataProduct" class="form-control" name="product">
+                                <?
+                                    $products = Products::getInstance()->getData();
+                                    foreach ( $products as $product ) {
+                                        echo '<option value="'. $product[ 'id' ] .'">'. $product[ 'name' ] .'</option>';
+                                    }
+                                ?>
+                            </select>
                         </div>
                     </div>
 
@@ -512,7 +520,7 @@ require 'header.php'
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                             <button type="submit" class="btn btn-primary">Обновить</button>
-                            <button type="button" id="deleteLandDataBtn" class="btn btn-danger">Удалить</button>
+                            <button type="button" id="deleteLandDataBtn" class="btn btn-danger">Удалить лендинг</button>
                         </div>
                     </div>
 

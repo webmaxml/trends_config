@@ -25,7 +25,15 @@ class FrontController {
 
 	public function getRoot() {
 		if ( $this->user->isLogged() ) {
-			require 'views/prices.php';
+			require 'views/landData.php';
+		} else {
+			require 'views/login.php';
+		}
+	}
+
+	public function getProducts() {
+		if ( $this->user->isLogged() ) {
+			require 'views/products.php';
 		} else {
 			require 'views/login.php';
 		}
@@ -65,7 +73,7 @@ class FrontController {
 
 	public function getLayers() {
 		if ( $this->user->isLogged() ) {
-			require 'views/layers.php';
+			require 'views/landLayers.php';
 		} else {
 			require 'views/login.php';
 		}
@@ -73,7 +81,7 @@ class FrontController {
 
 	public function getAbtest() {
 		if ( $this->user->isLogged() ) {
-			require 'views/abtest.php';
+			require 'views/landTest.php';
 		} else {
 			require 'views/login.php';
 		}
@@ -131,32 +139,6 @@ class FrontController {
 
 	public function get404() {
 		require 'views/404.php';
-	}
-
-	public function createLand() {
-		global $config;
-		$result = $this->lands->create( $_POST[ 'name' ], $_POST[ 'url' ] );
-
-		if ( $result === false ) {
-			header( "Location: " . $config[ 'base_url' ] . '/?land_status=2' );
-			exit;
-		} else {
-			header( "Location: " . $config[ 'base_url' ] . '/?land_status=1' );
-			exit;
-		} 
-	}
-
-	public function createLayer() {
-		global $config;
-		$result = $this->lands->create( $_POST[ 'name' ], $_POST[ 'url' ], 'true', $_POST[ 'target' ] );
-
-		if ( $result === false ) {
-			header( "Location: " . $config[ 'base_url' ] . '/layers?layer_status=2' );
-			exit;
-		} else {
-			header( "Location: " . $config[ 'base_url' ] . '/layers?layer_status=1' );
-			exit;
-		} 
 	}
 
 	public function createUpsell() {

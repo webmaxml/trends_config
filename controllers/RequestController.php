@@ -1,7 +1,7 @@
 <?php
 if ( session_status() == PHP_SESSION_NONE ) { session_start(); }
 
-class LandController {
+class RequestController {
 
 	private static $instance;
 
@@ -22,7 +22,7 @@ class LandController {
 		switch ( $this->source ) {
 			case 'platform': $this->state = new PlatformLandState();  break;
 			case 'config':   $this->state = new ConfigLandState();    break;
-			case 'auto':     $this->state = new AutoLandState();      break;
+			// case 'auto':     $this->state = new AutoLandState();      break;
 		}
 	}
 
@@ -150,59 +150,59 @@ class ConfigLandState {
 	}
 }
 
-class AutoLandState {
+// class AutoLandState {
 
-	public function __construct() {
-		$this->platform = Platform::getInstance();
-		$this->apiManager = ApiManager::getInstance();
-		$this->order = Order::getInstance();
-	}
+// 	public function __construct() {
+// 		$this->platform = Platform::getInstance();
+// 		$this->apiManager = ApiManager::getInstance();
+// 		$this->order = Order::getInstance();
+// 	}
 
-	public function getData() {
-		$platform_data = $this->platform->getStatistics( $_POST );
+// 	public function getData() {
+// 		$platform_data = $this->platform->getStatistics( $_POST );
 
-		if ( $platform_data[ 'errors' ] || !$platform_data ) {
-			$result = $this->apiManager->getDataForUrl( $_POST );
-		} else {
-			$result = $this->apiManager->getDataWithPlatform( $_POST, $platform_data );
-		}
+// 		if ( $platform_data[ 'errors' ] || !$platform_data ) {
+// 			$result = $this->apiManager->getDataForUrl( $_POST );
+// 		} else {
+// 			$result = $this->apiManager->getDataWithPlatform( $_POST, $platform_data );
+// 		}
 
-		echo json_encode( $result );
-	}
+// 		echo json_encode( $result );
+// 	}
 
-	public function processOrder( $values ) {
-		$this->checkOrderInput();
+// 	public function processOrder( $values ) {
+// 		$this->checkOrderInput();
 
-		$orderData = $this->order->formOrderPlatformData( $values );
-		$result = $this->order->sendOrderToPlatform( $orderData );
+// 		$orderData = $this->order->formOrderPlatformData( $values );
+// 		$result = $this->order->sendOrderToPlatform( $orderData );
 		
-		if ( !$result->errors ) {
-			header( 'Location: http://' . $values[ 'host' ] . '/form-ok.php' );
-			die();
-		} else {
-			$orderData = $this->order->formOrderData( $values );
-			$result = $this->order->sendOrder( $orderData );
+// 		if ( !$result->errors ) {
+// 			header( 'Location: http://' . $values[ 'host' ] . '/form-ok.php' );
+// 			die();
+// 		} else {
+// 			$orderData = $this->order->formOrderData( $values );
+// 			$result = $this->order->sendOrder( $orderData );
 
-			if ( $result->status === 'ok' ) {
-				header( 'Location: http://' . $values[ 'host' ] . '/form-ok.php' );
-				die();
-			} else {
-				echo '<pre>';
-				print_r( $result );
-				echo '</pre>';
-			}
-		}	
-	}
+// 			if ( $result->status === 'ok' ) {
+// 				header( 'Location: http://' . $values[ 'host' ] . '/form-ok.php' );
+// 				die();
+// 			} else {
+// 				echo '<pre>';
+// 				print_r( $result );
+// 				echo '</pre>';
+// 			}
+// 		}	
+// 	}
 
-	public function checkOrderInput() {
-		if ( empty( $_POST[ 'land_id' ] ) || 
-			 empty( $_POST[ 'ip' ] ) ||
-			 empty( $_POST[ 'host' ] ) ||
-			 empty( $_POST[ 'name' ] ) ||
-			 empty( $_POST[ 'price' ] ) ||
-			 empty( $_POST[ 'phone' ] ) ) {
-			echo 'Передача неполных данных';
-			die();
-		}
-	}
-}
+// 	public function checkOrderInput() {
+// 		if ( empty( $_POST[ 'land_id' ] ) || 
+// 			 empty( $_POST[ 'ip' ] ) ||
+// 			 empty( $_POST[ 'host' ] ) ||
+// 			 empty( $_POST[ 'name' ] ) ||
+// 			 empty( $_POST[ 'price' ] ) ||
+// 			 empty( $_POST[ 'phone' ] ) ) {
+// 			echo 'Передача неполных данных';
+// 			die();
+// 		}
+// 	}
+// }
