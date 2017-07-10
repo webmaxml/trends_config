@@ -19,6 +19,8 @@ require 'controllers/ApiController.php';
 require 'controllers/RequestController.php';
 require 'controllers/ProductsController.php';
 require 'controllers/LandsController.php';
+require 'controllers/MediaController.php';
+require 'controllers/UpsellsController.php';
 // config
 require 'data/config.php';
 
@@ -137,6 +139,40 @@ $router->map( 'GET', '/layer-delete', function() {
 	LandsController::getInstance()->deleteLayer();
 } );
 
+/**
+ * media
+ */
+
+$router->map( 'POST', '/image-upload', function() {
+	MediaController::getInstance()->uploadImage();
+} );
+
+$router->map( 'GET', '/image-delete', function() {
+	MediaController::getInstance()->deleteImage();
+} );
+
+/**
+ * upsells
+ */
+
+$router->map( 'POST', '/upsell-create', function() {
+	UpsellsController::getInstance()->createUpsell();
+} );
+
+$router->map( 'GET', '/upsell-data', function() {
+	UpsellsController::getInstance()->getUpsellData();
+} );
+
+$router->map( 'GET', '/upsell-update', function() {
+	UpsellsController::getInstance()->updateUpsell();
+} );
+
+$router->map( 'GET', '/upsell-delete', function() {
+	UpsellsController::getInstance()->deleteUpsell();
+} );
+
+
+
 // actions
 
 $router->map( 'POST', '/login', function() {
@@ -147,21 +183,12 @@ $router->map( 'POST', '/logout', function() {
 	FrontController::getInstance()->logoutUser();
 } );
 
-$router->map( 'POST', '/image-upload', function() {
-	FrontController::getInstance()->uploadImage();
-} );
 
 
-
-$router->map( 'POST', '/upsell-create', function() {
-	FrontController::getInstance()->createUpsell();
-} );
 
 $router->map( 'POST', '/test-create', function() {
 	FrontController::getInstance()->createTest();
 } );
-
-
 
 $router->map( 'POST', '/seller-update', function() {
 	FrontController::getInstance()->updateSeller();
@@ -189,23 +216,6 @@ $router->map( 'GET', '/land-test-toggle', function() {
 } );
 
 
-
-$router->map( 'GET', '/upsell-data', function() {
-	ApiController::getInstance()->getUpsellData();
-} );
-
-$router->map( 'GET', '/upsell-update', function() {
-	ApiController::getInstance()->updateUpsell();
-} );
-
-$router->map( 'GET', '/upsell-delete', function() {
-	ApiController::getInstance()->deleteUpsell();
-} );
-
-
-$router->map( 'GET', '/image-delete', function() {
-	ApiController::getInstance()->deleteImage();
-} );
 
 
 $router->map( 'GET', '/api', function() {

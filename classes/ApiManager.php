@@ -33,18 +33,8 @@ class ApiManager {
 					'title' => '',
 					'product' => $this->products->getProductById( $land[ 'product' ] )[ 'name' ],
 					'hit' => $land[ 'upsell_hit' ],
-					'price1' => $land[ 'price1' ],
-					'price2' => $land[ 'price2' ],
-					'price3' => $land[ 'price3' ],
-					'price4' => $land[ 'price4' ],
-					'price5' => $land[ 'price5' ],
-					'price6' => $land[ 'price6' ],
-					'price7' => $land[ 'price7' ],
-					'price8' => $land[ 'price8' ],
-					'price9' => $land[ 'price9' ],
-					'price10' => $land[ 'price10' ],
-					'discount' => $land[ 'discount' ],
-					'currency' => $land[ 'currency' ],
+					'discount' => $this->lands->getDiscount( $land[ 'id' ] ),
+					'currency' => $this->lands->getCurrency( $land[ 'id' ] ),
 					'upsell_index' => $land[ 'upsell_index' ],
 					'upsell_thanks' => $land[ 'upsell_thanks' ],
 					'ab_test' => $land[ 'ab_test' ],
@@ -60,19 +50,19 @@ class ApiManager {
 					'script_items' => $land[ 'script_items' ],
 				);
 
+				// prices
+				$data += $this->lands->getPrices( $land[ 'id' ] );
+
 				// upsells
 				if ( is_array( $land[ 'upsells' ] ) ) { 
 					$upsells = array();
 					foreach ( $land[ 'upsells' ] as $upsellId ) {
-						$upsell = $this->upsells->getDataById( $upsellId );
-						$upsell[ 'image' ] = $this->images->getUrlById( $upsell[ 'image' ] );
-
-						$upsells[] = $upsell;
+						$upsells[] = $this->upsells->getApiData( $upsellId );
 					}
 
 					$data[ 'upsells' ] = $upsells;
 				} else {
-					$data[ 'upsells' ] = $land[ 'upsells' ];
+					$data[ 'upsells' ] = '';
 				}
 
 				// redirections

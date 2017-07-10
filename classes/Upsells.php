@@ -15,17 +15,20 @@ class Upsells {
 
 	private function __construct() {
 		$this->db = FileDB::getInstance();
+		$this->images = Images::getInstance();
+		$this->lands = Lands::getInstance();
 	}
 
 	public function create( $data ) {
-		$this->db->create( 'upsells', array(
+		return $this->db->create( 'upsells', array(
 			'name' => $data[ 'name' ],
 			'title' => $data[ 'title' ],
 			'description' => $data[ 'description' ],
+			'image' => $data[ 'image' ],
+			'land' => $data[ 'land' ],
+			'stream' => $data[ 'stream' ],
 			'price' => $data[ 'price' ],
 			'currency' => $data[ 'currency' ],
-			'image' => $data[ 'image' ],
-			'url' => $data[ 'url' ]
 		) );
 	}
 
@@ -48,6 +51,25 @@ class Upsells {
 		}
 
 		return false;
+	}
+
+	public function getApiData( $id ) {
+		$upsell = $this->getDataById( $id );
+
+		$target_land = $this->lands->getDataById( $upsell[ 'land' ] );
+		if ( $target_land ) {
+			$upsell[ 'url' ] = $target_land[ 'url' ];
+			$upsell[ 'price' ] = $this->lands->getPrices( $target_land[ 'id' ] )[ 'price1' ];
+			$upsell[ 'currency' ] = $this->lands->getCurrency( $target_land[ 'id' ] );
+		} else {
+			$upsell[ 'url' ] = '';
+			$upsell[ 'price' ] = '';
+			$upsell[ 'currency' ] = '';
+		}
+		
+		$upsell[ 'image' ] = $this->images->getUrlById( $upsell[ 'image' ] );
+
+		return $upsell;
 	}
 
 	public function getNameById( $id ) {

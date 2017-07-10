@@ -36,6 +36,15 @@ require 'header.php'
                     <? } ?>
                     <!-- END MODALS -->
 
+                    <p>
+                        Если <span class="label label-info">Прокладка</span>: 
+                        <ul>
+                            <li>Цены, скидка, валюта, метрики используются из целевого лендинга</li>
+                            <li>Скрипт конверсии отключается</li>
+                        </ul>
+                        Вы все еще можете редактировать эти данные для прокладки, однако использоваться они будут только если лендинг перестанет быть прокладкой
+                    </p>
+
                     <div style="margin: 20px 0;">
                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#createLandModal">Подключить лендинг</button>
                     </div>
@@ -82,17 +91,42 @@ require 'header.php'
                                     </td>
                                     <td style="text-align: center; vertical-align: middle;">
                                         <? 
-                                            for ( $i = 1; $i <= 10; $i++ ) {
-                                                if ( $land[ 'price'.$i ] !== '' ) {
-                                                    echo '<div>';
-                                                    echo $land[ 'price'.$i ];
-                                                    echo '</div>';
+                                            $prices = Lands::getInstance()->getPrices( $land[ 'id' ] );
+                                            foreach ( $prices as $price ) {
+                                                if ( $price ) {
+
+                                                    if ( $land[ 'layer' ] === 'true' ) {
+                                                        echo '<div><span class="label label-info">'. $price .'</span></div>';
+                                                    } else {
+                                                        echo '<div>'. $price .'</div>';
+                                                    }
+
                                                 }
                                             }
                                         ?>
                                     </td>
-                                    <td style="text-align: center; vertical-align: middle;"><?= $land[ 'discount' ] ?></td>
-                                    <td style="text-align: center; vertical-align: middle;"><?= $land[ 'currency' ] ?></td>
+                                    <td style="text-align: center; vertical-align: middle;">
+                                        <? 
+                                            $discount = Lands::getInstance()->getDiscount( $land[ 'id' ] );
+                                            if ( $land[ 'layer' ] === 'true' ) {
+                                                echo '<span class="label label-info">'. $discount .'</span>';
+                                            } else {
+                                                echo $discount;
+                                            }
+
+                                        ?>
+                                    </td>
+                                    <td style="text-align: center; vertical-align: middle;">
+                                        <? 
+                                            $currency = Lands::getInstance()->getCurrency( $land[ 'id' ] );
+                                            if ( $land[ 'layer' ] === 'true' ) {
+                                                echo '<span class="label label-info">'. $currency .'</span>';
+                                            } else {
+                                                echo $currency;
+                                            }
+
+                                        ?>
+                                    </td>
                                     <td style="text-align: center; vertical-align: middle;">
                                         <button type="button" class="land-data__metric-btn btn btn-warning" data-toggle="modal" data-target="#metricLandDataModal" data-land-id="<?= $land[ 'id' ] ?>">
                                             <i class="fa fa-feed"></i>

@@ -133,33 +133,8 @@ class FrontController {
 		exit;
 	}
 
-	public function uploadImage() {
-		return $this->images->upload( $_FILES[ 'file' ][ 'name' ], $_FILES[ 'file' ][ 'tmp_name' ] );
-	}
-
 	public function get404() {
 		require 'views/404.php';
-	}
-
-	public function createUpsell() {
-		global $config;
-		$result = $this->upsells->create( array(
-			'name' => $_POST[ 'name' ],
-			'title' => $_POST[ 'title' ],
-			'description' => $_POST[ 'description' ],
-			'price' => $_POST[ 'price' ],
-			'currency' => $_POST[ 'currency' ],
-			'image' => $_POST[ 'image' ],
-			'url' => $_POST[ 'url' ]
-		) );
-
-		if ( $result === false ) {
-			header( "Location: " . $config[ 'base_url' ] . '/upsells?upsell_status=2' );
-			exit;
-		} else {
-			header( "Location: " . $config[ 'base_url' ] . '/upsells?upsell_status=1' );
-			exit;
-		} 
 	}
 
 	public function createTest() {

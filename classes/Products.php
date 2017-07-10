@@ -18,7 +18,7 @@ class Products {
 	}
 
 	public function create( $name, $id ) {
-		$this->db->create( 'products', array(
+		return $this->db->create( 'products', array(
 			'name' => $name,
 			'crm_id' => $id
 		) );

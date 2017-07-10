@@ -15,12 +15,11 @@ class Lands {
 
 	private function __construct() {
 		$this->db = FileDB::getInstance();
-		$this->upsells = Upsells::getInstance();
 		$this->images = Images::getInstance();
 	}
 
 	public function create( $name, $url ) {
-		$this->db->create( 'lands', array(
+		return $this->db->create( 'lands', array(
 			'name' => $name,
 			'url' => $url,
 			'product' => '',
@@ -92,6 +91,44 @@ class Lands {
 		}
 
 		return $test_lands;
+	}
+
+	public function getPrices( $id ) {
+		$land = $this->getDataById( $id );
+
+		// if it is layer - get prices from target
+		if ( $land[ 'layer' ] === 'true' ) {
+			$land = $this->getDataById( $land[ 'layer_target' ] );
+		}
+
+		$prices = [];
+		for ( $i = 1; $i <= 10; $i++ ) {
+            $prices[ 'price'.$i ] = $land[ 'price'.$i ];
+        }
+
+        return $prices;
+	}
+
+	public function getDiscount( $id ) {
+		$land = $this->getDataById( $id );
+
+		// if it is layer - get discount from target
+		if ( $land[ 'layer' ] === 'true' ) {
+			$land = $this->getDataById( $land[ 'layer_target' ] );
+		}
+
+		return $land[ 'discount' ];
+	}
+
+	public function getCurrency( $id ) {
+		$land = $this->getDataById( $id );
+
+		// if it is layer - get currency from target
+		if ( $land[ 'layer' ] === 'true' ) {
+			$land = $this->getDataById( $land[ 'layer_target' ] );
+		}
+
+		return $land[ 'currency' ];
 	}
 
 }

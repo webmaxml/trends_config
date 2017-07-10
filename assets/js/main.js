@@ -127,7 +127,12 @@ $( function() {
 						id: landId
 					},
 					success: function( data, status, xhr ) {
-						$( '#landConfigTitle' ).text( 'Редактировать ' + data.name );
+						var titleText =  'Редактировать ' + data.name;
+						if ( data.layer === 'true' ) {
+							titleText += ' <span class="label label-info">Прокладка</span>';
+						}
+
+						$( '#landConfigTitle' ).html( titleText );
 						$( '#landDataId' ).val( data.id );
 						$( '#landDataName' ).val( data.name );
 						$( '#landDataUrl' ).val( data.url );
@@ -411,7 +416,8 @@ $( function() {
 						$( '#upsellPrice2' ).val( data.price );
 						$( '#upsellCurrency2' ).val( data.currency );
 						$( '#upsellImg2' ).val( data.image ).trigger('change');
-						$( '#upsellUrl2' ).val( data.url );
+						$( '#upsellStream2' ).val( data.stream );
+						$( '#upsellLand2' ).val( data.land ).trigger('change.select2');
 						$deleteButton.data( 'upsell-id', data.id );
 					},
 					error: function( xhr, status, error ) {
@@ -577,7 +583,11 @@ $( function() {
 						id: landId
 					},
 					success: function( data, status, xhr ) {
-						$( '#landConfigTitle' ).text( 'Редактировать ' + data.name );
+						var titleText =  'Редактировать ' + data.name;
+						if ( data.layer === 'true' ) {
+							titleText += ' <span class="label label-info">Прокладка</span>';
+						}
+						$( '#landConfigTitle' ).html( titleText );
 						$( '#landId2' ).val( data.id );
 						$( '#landName2' ).val( data.name );
 						$( '#landUrl2' ).val( data.url );
