@@ -81,11 +81,18 @@ require 'header.php'
                                             echo '<div>'. $land[ 'name' ] .'</div>'; 
                                             if ( $land[ 'layer' ] === 'true' ) { 
                                                 echo '<div><span class="label label-info">Прокладка</span></div>';
-                                            }                                  
+                                            }    
+                                            if ( $land[ 'ab_test' ] === 'on' ) { 
+                                                echo '<div><span class="label label-danger">AB тест</span></div>';
+                                            }                               
                                         ?>     
                                     </td>
                                     <td style="text-align: center; vertical-align: middle;">
-                                        <a class="config__url-link" href="<?= $upsell[ 'stream' ] ?>" target="_blank"><?= $upsell[ 'stream' ] ?></a>
+                                        <?
+                                            if ( !empty( $upsell[ 'stream' ]  ) ) {
+                                                echo '<a class="btn btn-default" href="'. $upsell[ 'stream' ] .'" target="_blank"><i class="fa fa-external-link"></i></a>';
+                                            }
+                                        ?>
                                     </td>
                                     <td style="text-align: center; vertical-align: middle;"><?= $upsell[ 'price' ] ?></td>
                                     <td style="text-align: center; vertical-align: middle;"><?= $upsell[ 'currency' ] ?></td>

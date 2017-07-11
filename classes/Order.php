@@ -17,6 +17,7 @@ class Order {
 		$this->db = FileDB::getInstance();
 		$this->lands = Lands::getInstance();
 		$this->platform = Platform::getInstance();
+		$this->products = Products::getInstance();
 	}
 
 	public function update( $values ) {
@@ -28,13 +29,14 @@ class Order {
 		return $content;
 	}
 
-	public function formOrderData( $values ) {
+	public function formOrderData( $input ) {
 		$order_data = $this->getData();
-		$land_data = $this->lands->getDataById( $values[ 'land_id' ] );
+		$land = $this->lands->getDataById( $input[ 'land_id' ] );
+		$product_id = $this->products->getCrmId( $land[ 'product' ] );
 
 		// if auto take the country detected from user
 		if ( $order_data[ 'country' ] === 'auto' ) {
-			$country = $values[ 'country' ];
+			$country = $input[ 'country' ];
 		} else {
 			$country = $order_data[ 'country' ];
 		}
@@ -42,8 +44,8 @@ class Order {
 		// products set
 		$products = array(
 		    1 => array( 
-		            'product_id' => $land_data[ 'product_id' ], 
-		            'price'      => $values[ 'price' ], 
+		            'product_id' => $product_id, 
+		            'price'      => $input[ 'price' ], 
 		            'count'      => '1'    
 		    ),  
 		);
@@ -55,40 +57,40 @@ class Order {
 			'country' 		  => $country,
 		    'office'          => $order_data[ 'office_id' ],                  
 		    'products'        => urlencode( serialize( $products ) ),
-		    'bayer_name'      => $values[ 'name' ],
-		    'phone'           => $values[ 'phone' ],
+		    'bayer_name'      => $input[ 'name' ],
+		    'phone'           => $input[ 'phone' ],
 		    'email'           => '',
-		    'comment'         => '',
-		    'site'            => $values[ 'host' ],
-		    'ip'              => $values[ 'ip' ],
+		    'comment'         => $input[ 'comment' ],
+		    'site'            => $input[ 'host' ],
+		    'ip'              => $input[ 'ip' ],
 		    'delivery'        => $order_data[ 'delivery_id' ],
 		    'delivery_adress' => '',
 		    'payment'         => $order_data[ 'payment_id' ],
-		    'utm_source'      => $values[ 'utm_source' ],		    
-		    'utm_medium'      => $values[ 'utm_medium' ],
-		    'utm_term'        => $values[ 'utm_term' ],   
-		    'utm_content'     => $values[ 'utm_content' ],    
-		    'utm_campaign'    => $values[ 'utm_campaign' ]
+		    'utm_source'      => $input[ 'utm_source' ],		    
+		    'utm_medium'      => $input[ 'utm_medium' ],
+		    'utm_term'        => $input[ 'utm_term' ],   
+		    'utm_content'     => $input[ 'utm_content' ],    
+		    'utm_campaign'    => $input[ 'utm_campaign' ]
 		);
 
 		return $data;
 	}
 
-	public function formOrderPlatformData( $values ) {
+	public function formOrderPlatformData( $input ) {
 		$data = [
 			'api_key' => $this->platform->getData()[ 'key' ],
-			'ip' => $values[ 'ip' ],
-			'uid' => $values[ 'uid' ],
-			'user_agent' => $values[ 'user_agent' ],
-			'title' => $values[ 'title' ],
-			'price' => $values[ 'price' ],
-			'utm_source' => $values[ 'utm_source' ],
-			'utm_medium' => $values[ 'utm_medium' ],
-			'utm_term' => $values[ 'utm_term' ],
-			'utm_content' => $values[ 'utm_content' ],
-			'utm_campaign' => $values[ 'utm_campaign' ],
-			'name' => $values[ 'name' ],
-			'phone' => $values[ 'phone' ],
+			'ip' => $input[ 'ip' ],
+			'uid' => $input[ 'uid' ],
+			'user_agent' => $input[ 'user_agent' ],
+			'title' => $input[ 'title' ],
+			'price' => $input[ 'price' ],
+			'utm_source' => $input[ 'utm_source' ],
+			'utm_medium' => $input[ 'utm_medium' ],
+			'utm_term' => $input[ 'utm_term' ],
+			'utm_content' => $input[ 'utm_content' ],
+			'utm_campaign' => $input[ 'utm_campaign' ],
+			'name' => $input[ 'name' ],
+			'phone' => $input[ 'phone' ],
 		];
 
 		return $data;

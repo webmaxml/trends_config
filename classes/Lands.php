@@ -15,7 +15,7 @@ class Lands {
 
 	private function __construct() {
 		$this->db = FileDB::getInstance();
-		$this->images = Images::getInstance();
+		$this->products = Products::getInstance();
 	}
 
 	public function create( $name, $url ) {
@@ -76,6 +76,18 @@ class Lands {
 		return false;
 	}
 
+	public function getDataByUrl( $url ) {
+		require 'data/lands.php';
+
+		foreach( $content as $land ) {
+			if ( $land[ 'url' ] === $url ) {
+				return $land;
+			}
+		}
+
+		return false;
+	}
+
 	public function delete( $id ) {
 		return $this->db->delete( 'lands', $id );
 	}
@@ -93,42 +105,142 @@ class Lands {
 		return $test_lands;
 	}
 
+	public function getPricesFromTarget( $id ) {
+		$land = $this->getDataById( $id );
+		$target = $this->getDataById( $land[ 'layer_target' ] );
+
+		if ( $target ) {
+			$prices = [];
+			for ( $i = 1; $i <= 10; $i++ ) {
+	            $prices[ 'price'.$i ] = $target[ 'price'.$i ];
+	        }
+
+	        return $prices;
+		} else {
+			return false;
+		}
+	}
+
 	public function getPrices( $id ) {
 		$land = $this->getDataById( $id );
 
-		// if it is layer - get prices from target
-		if ( $land[ 'layer' ] === 'true' ) {
-			$land = $this->getDataById( $land[ 'layer_target' ] );
+		if ( $land ) {
+			$prices = [];
+			for ( $i = 1; $i <= 10; $i++ ) {
+	            $prices[ 'price'.$i ] = $land[ 'price'.$i ];
+	        }
+
+	        return $prices;
+		} else {
+			return false;
 		}
+	}
 
-		$prices = [];
-		for ( $i = 1; $i <= 10; $i++ ) {
-            $prices[ 'price'.$i ] = $land[ 'price'.$i ];
-        }
+	public function getDiscountFromTarget( $id ) {
+		$land = $this->getDataById( $id );
+		$target = $this->getDataById( $land[ 'layer_target' ] );
 
-        return $prices;
+		if ( $target ) {
+			return $target[ 'discount' ];
+		} else {
+			return false;
+		}
 	}
 
 	public function getDiscount( $id ) {
 		$land = $this->getDataById( $id );
 
-		// if it is layer - get discount from target
-		if ( $land[ 'layer' ] === 'true' ) {
-			$land = $this->getDataById( $land[ 'layer_target' ] );
+		if ( $land ) {
+			return $land[ 'discount' ];
+		} else {
+			return false;
 		}
+	}
 
-		return $land[ 'discount' ];
+	public function getCurrencyFromTarget( $id ) {
+		$land = $this->getDataById( $id );
+		$target = $this->getDataById( $land[ 'layer_target' ] );
+
+		if ( $target ) {
+			return $target[ 'currency' ];
+		} else {
+			return false;
+		}
 	}
 
 	public function getCurrency( $id ) {
 		$land = $this->getDataById( $id );
 
-		// if it is layer - get currency from target
-		if ( $land[ 'layer' ] === 'true' ) {
-			$land = $this->getDataById( $land[ 'layer_target' ] );
+		if ( $land ) {
+			return $land[ 'currency' ];
+		} else {
+			return false;
 		}
+	}
 
-		return $land[ 'currency' ];
+	public function getMetricsFromTarget( $id ) {
+		$land = $this->getDataById( $id );
+		$target = $this->getDataById( $land[ 'layer_target' ] );
+
+		if ( $target ) {
+			$metrics = [
+				'metric_head_index' => $target[ 'metric_head_index' ],
+				'metric_body_index' => $target[ 'metric_body_index' ],
+				'metric_head_thanks' => $target[ 'metric_head_thanks' ],
+				'metric_body_thanks' => $target[ 'metric_body_thanks' ]
+			];
+
+			return $metrics;
+		} else {
+			return false;
+		}
+	}
+
+	public function getMetrics( $id ) {
+		$land = $this->getDataById( $id );
+
+		if ( $land ) {
+			$metrics = [
+				'metric_head_index' => $land[ 'metric_head_index' ],
+				'metric_body_index' => $land[ 'metric_body_index' ],
+				'metric_head_thanks' => $land[ 'metric_head_thanks' ],
+				'metric_body_thanks' => $land[ 'metric_body_thanks' ]
+			];
+
+			return $metrics;
+		} else {
+			return false;
+		}
+	}
+
+	public function isLayer( $id ) {
+		$land = $this->getDataById( $id );
+
+		if ( $land ) {
+			return $land[ 'layer' ] === 'true';
+		} else {
+			return false;
+		}
+	}
+
+	public function hasTest( $id ) {
+		$land = $this->getDataById( $id );
+
+		if ( $land ) {
+			return $land[ 'ab_test' ] === 'on';
+		} else {
+			return false;
+		}
+	}
+
+	public function getProductName( $id ) {
+		$land = $this->getDataById( $id );
+
+		if ( $land ) {
+			return $this->products->getProductById( $land[ 'product' ] )[ 'name' ];
+		} else {
+			return false;
+		}
 	}
 
 }

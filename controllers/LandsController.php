@@ -45,7 +45,7 @@ class LandsController {
 	}
 
 	public function updateLand() {
-		// replace all ' with " cause it breaks file system
+		// replace all ' with "
 		$values = array();
 		foreach ( $_GET as $key => $value ) {
 			$values[ $key ] = preg_replace( '/\'/', '"', $value );
@@ -150,6 +150,48 @@ class LandsController {
 		);
 
 		$result = $this->lands->update( $_GET[ 'id' ], $values );
+
+		echo json_encode( array( 'success' => $result ) );
+		die();
+	}
+
+	public function createTest() {
+		$values = array();
+		$values[ 'redirections' ] = $_POST[ 'redirects' ];
+		
+		$result = $this->lands->update( $_POST[ 'entry' ], $values );
+
+		if ( $result === false ) {
+			header( "Location: " . $config[ 'base_url' ] . '/abtest?test_status=2' );
+			exit;
+		} else {
+			header( "Location: " . $config[ 'base_url' ] . '/abtest?test_status=1' );
+			exit;
+		} 
+	}
+
+	public function toggleLandTest() {
+		$values = array();
+
+		$values[ 'ab_test' ] = $_GET[ 'value' ] === 'true' ? 'on' : 'off';
+
+		$result = $this->lands->update( $_GET[ 'id' ], $values );
+		$result === false ? false : true;
+
+		echo json_encode( array( 'success' => $result, 'data' => $_GET[ 'value' ] ) );
+		die();
+	}
+
+	public function updateTest() {
+		$values = array();
+		$values[ 'redirections' ] = isset( $_GET[ 'redirects' ] ) ? $_GET[ 'redirects' ] : '';
+
+		if ( !$_GET[ 'redirects' ] ) {
+			$values[ 'ab_test' ] = 'off';
+		}
+		
+		$result = $this->lands->update( $_GET[ 'entry' ], $values );
+		$result === false ? false : true;
 
 		echo json_encode( array( 'success' => $result ) );
 		die();

@@ -12,6 +12,7 @@
 
 	<form action="<?= $order_url ?>" method="post">
 		<?= $hidden_input ?>
+		<input type="hidden" name="comment" value="Test comment">
 		<input type="text" name="name">
 		<input type="text" name="phone">
 		<button>Заказать</button>

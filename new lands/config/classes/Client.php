@@ -14,6 +14,8 @@ class Client {
 		$this->agent_for_platform = $this->agent . $this->ip . $this->cookie; 
 		$this->browser = $this->getBrowser( $this->agent );
 		$this->os = $this->getOS( $this->agent );
+		$this->referer = empty( $_SERVER[ 'HTTP_REFERER'] ) ? 'Не определен' : $_SERVER[ 'HTTP_REFERER'];
+		$this->lang = $_SERVER[ 'HTTP_ACCEPT_LANGUAGE' ];
 
 		$this->uid = $this->setUid();
 		$this->utm = $this->utm();

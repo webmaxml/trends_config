@@ -44,7 +44,9 @@ class ConfigController {
 		$this->orderForm->init( $data );
 
 		// transit
-		if ( !empty( $data->layer_target ) ) {
+		if ( isset( $_GET[ 'url' ] ) ) {
+			$this->transit->setTargetPlatformUrl( $_GET[ 'url' ] );
+		} elseif ( !empty( $data->layer_target ) ) {
 			$this->transit->setTargetUrl( $data->layer_target, 'utm_medium' );
 		} 
 
@@ -101,7 +103,7 @@ class ConfigController {
 			'price_10' => isset( $data->price1 ) ? $data->price10 : 0,
 			'skidka' => isset( $data->discount ) ? $data->discount : 0,
 			'valuta' => isset( $data->currency ) ? $data->currency : '',
-			'price_old' => $data->price1 / ( $data->discount * 0.01 ),
+			'price_old' => round( $data->price1 / ( $data->discount * 0.01 ) ),
 		];
 
 		$this->templateVars = array_merge( $this->templateVars, $this->mainVars->getMainVars() );

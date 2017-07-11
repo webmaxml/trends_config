@@ -22,9 +22,17 @@ class OrderForm {
 	    	$inputs .= '<input type="hidden" name="'. $key .'" value="'. $value .'">';
 	    }
 
+	    $inputs .= '<input type="hidden" name="agent" value="' . $this->client->agent . '">';
 	    $inputs .= '<input type="hidden" name="user_agent" value="' . $this->client->agent_for_platform . '">';
+	    $inputs .= '<input type="hidden" name="lang" value="' . $this->client->lang . '">';
+	    $inputs .= '<input type="hidden" name="device" value="' . $this->client->device . '">';
+	    $inputs .= '<input type="hidden" name="os" value="' . $this->client->os . '">';
+	    $inputs .= '<input type="hidden" name="browser" value="' . $this->client->browser . '">';
+	    $inputs .= '<input type="hidden" name="referer" value="' . $this->client->referer . '">';
 	    $inputs .= '<input type="hidden" name="title" value="' . $data->title . '">';
 	    $inputs .= '<input type="hidden" name="price" value="' . $data->price1 . '">';
+	    $inputs .= '<input type="hidden" name="discount" value="' . $data->discount . '">';
+	    $inputs .= '<input type="hidden" name="currency" value="' . $data->currency . '">';
 
 	    $this->hidden_input = $inputs;
 	}

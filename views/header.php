@@ -77,6 +77,9 @@
                                             <a href="/seller">Продавец</a>
                                         </li>
                                         <li>
+                                            <a href="/emailData">Отправка email</a>
+                                        </li>
+                                        <li>
                                             <a href="/orderData">Заказы</a>
                                         </li>
                                         <li>

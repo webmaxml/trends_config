@@ -111,6 +111,14 @@ class FrontController {
 		}
 	}
 
+	public function getEmailData() {
+		if ( $this->user->isLogged() ) {
+			require 'views/emailData.php';
+		} else {
+			require 'views/login.php';
+		}
+	}
+
 	public function loginUser() {
 		global $config;
 
@@ -135,21 +143,6 @@ class FrontController {
 
 	public function get404() {
 		require 'views/404.php';
-	}
-
-	public function createTest() {
-		$values = array();
-		$values[ 'redirections' ] = $_POST[ 'redirects' ];
-		
-		$result = $this->lands->update( $_POST[ 'entry' ], $values );
-
-		if ( $result === false ) {
-			header( "Location: " . $config[ 'base_url' ] . '/abtest?test_status=2' );
-			exit;
-		} else {
-			header( "Location: " . $config[ 'base_url' ] . '/abtest?test_status=1' );
-			exit;
-		} 
 	}
 
 	public function updateSeller() {
@@ -181,6 +174,22 @@ class FrontController {
 			echo 'Произошла ошибка при записи данных!';
 		} else {
 			header( "Location: " . $config[ 'base_url' ] . '/platformData' );
+			exit;
+		}
+	}
+
+	public function updateEmail() {
+		$values = array();
+		foreach ( $_POST as $key => $value ) {
+			$values[ $key ] = addslashes( $value );
+		}
+
+		$result = $this->seller->update( $values );
+
+		if ( $result === false ) {
+			echo 'Произошла ошибка при записи данных!';
+		} else {
+			header( "Location: " . $config[ 'base_url' ] . '/emailData' );
 			exit;
 		}
 	}

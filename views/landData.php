@@ -66,15 +66,23 @@ require 'header.php'
                             </tr>
                         </thead>
                         <tbody>
-                            <? foreach( Lands::getInstance()->getLandsData() as $land ) { ?>
+                            <? 
+                                $source = Platform::getInstance()->getData()[ 'source' ];
+                                $lands = Lands::getInstance();
+
+                                foreach( $lands->getLandsData() as $land ) { ?>
                                 
                                 <tr>
                                     <td style="text-align: center; vertical-align: middle;"><?= $land[ 'id' ] ?></td>
                                     <td style="text-align: center; vertical-align: middle;">
                                         <div><?= $land[ 'name' ] ?></div>
                                         <? 
-                                            if ( $land[ 'layer' ] === 'true' ) { 
+                                            if ( $lands->isLayer( $land[ 'id' ] ) ) { 
                                                 echo '<div><span class="label label-info">Прокладка</span></div>';
+                                            }
+
+                                            if ( $lands->hasTest( $land[ 'id' ] ) ) { 
+                                                echo '<div><span class="label label-danger">AB тест</span></div>';
                                             } 
                                         ?>
                                     </td>
@@ -91,40 +99,46 @@ require 'header.php'
                                     </td>
                                     <td style="text-align: center; vertical-align: middle;">
                                         <? 
-                                            $prices = Lands::getInstance()->getPrices( $land[ 'id' ] );
-                                            foreach ( $prices as $price ) {
-                                                if ( $price ) {
-
-                                                    if ( $land[ 'layer' ] === 'true' ) {
+                                            if ( $lands->isLayer( $land[ 'id' ] ) && $source === 'config' ) {
+                                                $prices = $lands->getPricesFromTarget( $land[ 'id' ] );
+                                                if ( $prices ) {
+                                                    foreach ( $prices as $price ) {
                                                         echo '<div><span class="label label-info">'. $price .'</span></div>';
-                                                    } else {
+                                                    }
+                                                }
+                                                
+                                            } else {
+                                                $prices = $lands->getPrices( $land[ 'id' ] );
+                                                if ( $prices ) {
+                                                    foreach ( $prices as $price ) {
                                                         echo '<div>'. $price .'</div>';
                                                     }
-
                                                 }
+
                                             }
+
                                         ?>
                                     </td>
                                     <td style="text-align: center; vertical-align: middle;">
                                         <? 
-                                            $discount = Lands::getInstance()->getDiscount( $land[ 'id' ] );
-                                            if ( $land[ 'layer' ] === 'true' ) {
+                                            if ( $lands->isLayer( $land[ 'id' ] ) && $source === 'config' ) {
+                                                $discount = $lands->getDiscountFromTarget( $land[ 'id' ] );
                                                 echo '<span class="label label-info">'. $discount .'</span>';
                                             } else {
+                                                $discount = $lands->getDiscount( $land[ 'id' ] );
                                                 echo $discount;
                                             }
-
                                         ?>
                                     </td>
                                     <td style="text-align: center; vertical-align: middle;">
                                         <? 
-                                            $currency = Lands::getInstance()->getCurrency( $land[ 'id' ] );
-                                            if ( $land[ 'layer' ] === 'true' ) {
+                                            if ( $lands->isLayer( $land[ 'id' ] ) && $source === 'config' ) {
+                                                $currency = $lands->getCurrencyFromTarget( $land[ 'id' ] );
                                                 echo '<span class="label label-info">'. $currency .'</span>';
                                             } else {
+                                                $currency = $lands->getCurrency( $land[ 'id' ] );
                                                 echo $currency;
                                             }
-
                                         ?>
                                     </td>
                                     <td style="text-align: center; vertical-align: middle;">

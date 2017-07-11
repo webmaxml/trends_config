@@ -33,6 +33,16 @@ class Products {
 		return $content;
 	}
 
+	public function getCrmId( $id ) {
+		$product = $this->getProductById( $id );
+
+		if ( $product ) {
+			return $product[ 'crm_id' ];
+		} else {
+			return false;
+		}
+	}
+
 	public function getProductById( $id ) {
 		require 'data/products.php';
 

@@ -13,6 +13,7 @@ require 'classes/Images.php';
 require 'classes/Upsells.php';
 require 'classes/Seller.php';
 require 'classes/Products.php';
+require 'classes/State.php';
 // controllers
 require 'controllers/FrontController.php';
 require 'controllers/ApiController.php';
@@ -75,6 +76,10 @@ $router->map( 'GET', '/platformData', function() {
 	FrontController::getInstance()->getPlatformData();
 } );
 
+$router->map( 'GET', '/emailData', function() {
+	FrontController::getInstance()->getEmailData();
+} );
+
 /**
  * products
  */
@@ -125,6 +130,18 @@ $router->map( 'GET', '/land-update-upsells', function() {
 
 $router->map( 'GET', '/land-upsell-toggle', function() {
 	LandsController::getInstance()->toggleLandUpsell();
+} );
+
+$router->map( 'POST', '/test-create', function() {
+	LandsController::getInstance()->createTest();
+} );
+
+$router->map( 'GET', '/test-update', function() {
+	LandsController::getInstance()->updateTest();
+} );
+
+$router->map( 'GET', '/land-test-toggle', function() {
+	LandsController::getInstance()->toggleLandTest();
 } );
 
 /**
@@ -186,9 +203,7 @@ $router->map( 'POST', '/logout', function() {
 
 
 
-$router->map( 'POST', '/test-create', function() {
-	FrontController::getInstance()->createTest();
-} );
+
 
 $router->map( 'POST', '/seller-update', function() {
 	FrontController::getInstance()->updateSeller();
@@ -202,18 +217,16 @@ $router->map( 'POST', '/platform-update', function() {
 	FrontController::getInstance()->updatePlatform();
 } );
 
+$router->map( 'POST', '/email-update', function() {
+	FrontController::getInstance()->updateEmail();
+} );
+
 
 /**
  * API routes
  */
 
-$router->map( 'GET', '/test-update', function() {
-	ApiController::getInstance()->updateTest();
-} );
 
-$router->map( 'GET', '/land-test-toggle', function() {
-	ApiController::getInstance()->toggleLandTest();
-} );
 
 
 

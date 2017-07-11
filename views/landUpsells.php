@@ -64,6 +64,10 @@ require 'header.php'
                                             if ( $land[ 'layer' ] === 'true' ) { 
                                                 echo '<div><span class="label label-info">Прокладка</span></div>';
                                             } 
+
+                                            if ( $land[ 'ab_test' ] === 'on' ) { 
+                                                echo '<div><span class="label label-danger">AB тест</span></div>';
+                                            } 
                                         ?>
                                     </td>
                                     <td style="text-align: center; vertical-align: middle;">
