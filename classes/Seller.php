@@ -100,7 +100,6 @@ class Seller {
 
 
 	public function getPlatformMailData() {
-
 	}
 
 	public function sendMail( $data ) {

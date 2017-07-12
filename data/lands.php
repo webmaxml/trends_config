@@ -706,13 +706,13 @@ $content = array(
 'name'=>'шланг x-hose',
 'url'=>'http://x-hose.all-trends.top/',
 'price1'=>'75',
-'price2'=>'',
-'price3'=>'',
-'price4'=>'',
-'price5'=>'',
-'price6'=>'',
-'price7'=>'',
-'price8'=>'',
+'price2'=>'75',
+'price3'=>'151',
+'price4'=>'191',
+'price5'=>'215',
+'price6'=>'255',
+'price7'=>'295',
+'price8'=>'335',
 'price9'=>'',
 'price10'=>'',
 'discount'=>'50',
@@ -730,6 +730,11 @@ $content = array(
 'ab_test'=>'off',
 'redirections'=>'',
 'product'=>'163',
+'script_active'=>'on',
+'script_country'=>'ua',
+'script_sex'=>'all',
+'script_windows'=>'10',
+'script_items'=>'3',
 ],
 [
 'id'=>'80',
@@ -1488,9 +1493,65 @@ $content = array(
 'ab_test'=>'off',
 'redirections'=>'',
 'metric_head_index'=>'',
-'metric_body_index'=>'',
+'metric_body_index'=>'<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter45091812 = new Ya.Metrika({
+                    id:45091812,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true,
+                    webvisor:true
+                });
+            } catch(e) { }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/45091812" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->',
 'metric_head_thanks'=>'',
-'metric_body_thanks'=>'',
+'metric_body_thanks'=>'<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter45091812 = new Ya.Metrika({
+                    id:45091812,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true,
+                    webvisor:true
+                });
+            } catch(e) { }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/45091812" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->',
 'script_active'=>'on',
 'script_country'=>'ua',
 'script_sex'=>'all',

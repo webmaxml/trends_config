@@ -1,7 +1,11 @@
 <?php
 if ( session_status() == PHP_SESSION_NONE ) { session_start(); }
 
+// interfaces
+require 'interfaces/ISourceState.php';
+require 'interfaces/ILayerState.php';
 // classes
+require 'classes/State.php';
 require 'classes/AltoRouter.php';
 require 'classes/FileDB.php';
 require 'classes/ApiManager.php';
@@ -13,7 +17,6 @@ require 'classes/Images.php';
 require 'classes/Upsells.php';
 require 'classes/Seller.php';
 require 'classes/Products.php';
-require 'classes/State.php';
 // controllers
 require 'controllers/FrontController.php';
 require 'controllers/ApiController.php';
@@ -190,7 +193,7 @@ $router->map( 'GET', '/upsell-delete', function() {
 
 
 
-// actions
+// other
 
 $router->map( 'POST', '/login', function() {
 	FrontController::getInstance()->loginUser();
@@ -199,11 +202,6 @@ $router->map( 'POST', '/login', function() {
 $router->map( 'POST', '/logout', function() {
 	FrontController::getInstance()->logoutUser();
 } );
-
-
-
-
-
 
 $router->map( 'POST', '/seller-update', function() {
 	FrontController::getInstance()->updateSeller();
@@ -225,11 +223,6 @@ $router->map( 'POST', '/email-update', function() {
 /**
  * API routes
  */
-
-
-
-
-
 
 $router->map( 'GET', '/api', function() {
 	ApiController::getInstance()->getDataForUrl();

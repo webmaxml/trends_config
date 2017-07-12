@@ -9,10 +9,10 @@ class Upsells {
 	public function init( $data ) {
 		$this->upsells = $data->upsells;
 		$this->hit = $data->hit;
-		$this->query = $this->getQuery( 'utm_medium' );
+		$this->query = $data->state === 'config' ? $this->getQuery( 'utm_medium' ) : '';
 
 		$this->setUpsells();
-		$this->addAssets();
+		$this->addAssets( $data );
 	}
 
 	private function getQuery( $param_name ) {
@@ -107,7 +107,7 @@ class Upsells {
 		$this->upsells = $html;
 	}
 
-	private function addAssets() {
+	private function addAssets( $data ) {
 		global $config_host;
 		global $isIndex;
 
@@ -117,8 +117,8 @@ class Upsells {
 	    <link rel="stylesheet" href="<?= $config_host ?>/assets/css/allTrends.css">
 
 	    <?
-	    if ( !empty( $this->config_data->upsells ) && 
-	    	 count( $this->config_data->upsells ) === 2 && 
+	    if ( !empty( $data->upsells ) && 
+	    	 count( $data->upsells ) === 2 && 
 	    	 $isIndex ) { 
 	    ?>
 	  

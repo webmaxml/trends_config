@@ -44,9 +44,9 @@ class Order {
 		// products set
 		$products = array(
 		    1 => array( 
-		            'product_id' => $product_id, 
-		            'price'      => $input[ 'price' ], 
-		            'count'      => '1'    
+	            'product_id' => $product_id, 
+	            'price'      => $input[ 'price' ], 
+	            'count'      => '1'    
 		    ),  
 		);
 		

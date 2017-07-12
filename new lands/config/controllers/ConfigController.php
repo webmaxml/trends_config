@@ -24,9 +24,9 @@ class ConfigController {
 		$data = $this->request->getConfigData( $data_for_config );
 
 		// debug
-		echo '<pre>';
-		print_r( $data );
-		echo '</pre>';
+		// echo '<pre>';
+		// print_r( $data );
+		// echo '</pre>';
 
 		// redirection
 		if ( $data->ab_test === 'on' && is_array( $data->redirections ) ) {
@@ -88,22 +88,27 @@ class ConfigController {
 			'upsells' => $this->upsells->getUpsells(),
 			'transit_target' => $this->transit->getUrl(),
 			'hidden_input' => $this->orderForm->getHiddenInput(),
-
 			// product vars
 			'product' => isset( $data->product ) ? $data->product : '',
-			'price_new' => isset( $data->price1 ) ? $data->price1 : 0,
-			'price_2' => isset( $data->price1 ) ? $data->price2 : 0,
-			'price_3' => isset( $data->price1 ) ? $data->price3 : 0,
-			'price_4' => isset( $data->price1 ) ? $data->price4 : 0,
-			'price_5' => isset( $data->price1 ) ? $data->price5 : 0,
-			'price_6' => isset( $data->price1 ) ? $data->price6 : 0,
-			'price_7' => isset( $data->price1 ) ? $data->price7 : 0,
-			'price_8' => isset( $data->price1 ) ? $data->price8 : 0,
-			'price_9' => isset( $data->price1 ) ? $data->price9 : 0,
-			'price_10' => isset( $data->price1 ) ? $data->price10 : 0,
+			'price_new' => round( isset( $data->price1 ) ? $data->price1 : 0 ),
+			'price_2' => round( isset( $data->price2 ) ? $data->price2 : 0 ),
+			'price_3' => round( isset( $data->price3 ) ? $data->price3 : 0 ),
+			'price_4' => round( isset( $data->price4 ) ? $data->price4 : 0 ),
+			'price_5' => round( isset( $data->price5 ) ? $data->price5 : 0 ),
+			'price_6' => round( isset( $data->price6 ) ? $data->price6 : 0 ),
+			'price_7' => round( isset( $data->price7 ) ? $data->price7 : 0 ),
+			'price_8' => round( isset( $data->price8 ) ? $data->price8 : 0 ),
+			'price_9' => round( isset( $data->price9 ) ? $data->price9 : 0 ),
+			'price_10' => round( isset( $data->price10 ) ? $data->price10 : 0 ),
 			'skidka' => isset( $data->discount ) ? $data->discount : 0,
 			'valuta' => isset( $data->currency ) ? $data->currency : '',
 			'price_old' => round( $data->price1 / ( $data->discount * 0.01 ) ),
+			// seller
+			'seller' => isset( $data->seller_name ) ? $data->seller_name : '',
+			'seller_adress' => isset( $data->seller_address ) ? $data->seller_address : '',
+			'contact_phone1' => isset( $data->seller_phone1 ) ? $data->seller_phone1 : '',
+			'contact_phone2' => isset( $data->seller_phone2 ) ? $data->seller_phone2 : '',
+			'contact_email' => isset( $data->seller_email ) ? $data->seller_email : '',
 		];
 
 		$this->templateVars = array_merge( $this->templateVars, $this->mainVars->getMainVars() );

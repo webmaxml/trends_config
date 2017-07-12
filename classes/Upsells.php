@@ -100,36 +100,33 @@ class Upsells {
 	public function getConfigApiData( $id ) {
 		$upsell = $this->getDataById( $id );
 
-		if ( $upsell ) {
-			$target_land = $this->lands->getDataById( $upsell[ 'land' ] );
-			if ( $target_land ) {
-				$upsell[ 'url' ] = $target_land[ 'url' ];
-				$upsell[ 'price' ] = $this->lands->getPrices( $target_land[ 'id' ] )[ 'price1' ];
-				$upsell[ 'currency' ] = $this->lands->getCurrency( $target_land[ 'id' ] );
-			} else {
-				$upsell[ 'url' ] = '';
-				$upsell[ 'price' ] = '';
-				$upsell[ 'currency' ] = '';
-			}
+		if ( !$upsell ) { return false; }
 
-			$upsell[ 'image' ] = $this->images->getUrlById( $upsell[ 'image' ] );
-
-			return $upsell;
+		$target_land = $this->lands->getDataById( $upsell[ 'land' ] );
+		if ( $target_land ) {
+			$upsell[ 'url' ] = $target_land[ 'url' ];
+			$upsell[ 'price' ] = $this->lands->getPrices( $target_land[ 'id' ] )[ 'price1' ];
+			$upsell[ 'currency' ] = $this->lands->getCurrency( $target_land[ 'id' ] );
 		} else {
-			return false;
+			$upsell[ 'url' ] = '';
+			$upsell[ 'price' ] = '';
+			$upsell[ 'currency' ] = '';
 		}
+
+		$upsell[ 'image' ] = $this->images->getUrlById( $upsell[ 'image' ] );
+
+		return $upsell;
 	}
 
 	public function getPlatformApiData( $id ) {
 		$upsell = $this->getDataById( $id );
 
-		if ( $upsell ) {
-			$upsell[ 'url' ] = $upsell[ 'stream' ];
-			$upsell[ 'image' ] = $this->images->getUrlById( $upsell[ 'image' ] );
-			return $upsell;
-		} else {
-			return false;
-		}
+		if ( !$upsell ) { return false; }
+
+		$upsell[ 'url' ] = $upsell[ 'stream' ];
+		$upsell[ 'image' ] = $this->images->getUrlById( $upsell[ 'image' ] );
+		
+		return $upsell;
 	}
 
 	public function getNameById( $id ) {

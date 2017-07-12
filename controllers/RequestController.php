@@ -14,11 +14,12 @@ class RequestController {
 	}
 
 	private function __construct() {
-		$this->state = State::getInstance();
 	}
 
 	public function getData() {
-		$data = $this->state->getApiData( $_POST );
+		$state = State::getSourceState();
+
+		$data = $state->getApiData( $_POST );
 		echo json_encode( $data );
 	}
 
@@ -33,21 +34,31 @@ class RequestController {
 			die();
 		}
 
+		$state = State::getSourceState();
+
 		$values = [];
 		foreach ( $_POST as $key => $value ) {
 			$values[ $key ] = htmlspecialchars( $value );
 		}
 
-		$result = $this->state->makeOrder( $values );
+		$result = $state->makeOrder( $values );
 
 		if ( $result->status === 'ok' || !$result->errors ) {
-			header( 'Location: http://' . $values[ 'host' ] . '/form-ok.php' );
-			die();
-		} else {
-			echo '<pre>';
-			print_r( $result );
-			echo '</pre>';
-		}
+			$mail_result = $state->sendMail( $values );
+
+			if ( $mail_result ) {
+				header( 'Location: http://' . $values[ 'host' ] . '/form-ok.php' );
+				die();
+			}
+
+		} 
+		
+		// if something goes wrong
+		echo '<pre>';
+		print_r( $result );
+		echo '</pre><br><br>';
+		echo 'mail status:<br>';
+		echo var_dump( $result );
 	}
 
 }

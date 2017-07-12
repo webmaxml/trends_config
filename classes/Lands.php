@@ -243,4 +243,90 @@ class Lands {
 		}
 	}
 
+	public function getTestData( $id ) {
+		$land = $this->getDataById( $id );
+		$hasTest = $this->hasTest( $id );
+
+		if ( !$land ) { return false; }
+
+		if ( $hasTest ) { 
+
+			$redirections = array();
+			foreach ( $land[ 'redirections' ] as $redirectId ) {
+				$redirections[] = $this->getDataById( $redirectId )[ 'url' ];
+			}
+
+			return [
+				'ab_test' => 'on',
+				'redirections' => $redirections
+			];
+		} else {
+			return [
+				'ab_test' => 'off',
+				'redirections' => ''
+			];
+		}
+	}
+
+	public function getDisabledTestData() {
+		return [
+			'ab_test' => 'off',
+			'redirections' => ''
+		];
+	}
+
+	public function getLayerData( $id ) {
+		$land = $this->getDataById( $id );
+		$isLayer = $this->isLayer( $id );
+
+		if ( !$land ) { return false; }
+
+		if ( $isLayer ) {
+			$target = $this->getDataById( $land[ 'layer_target' ] );
+
+			return [
+				'layer' => 'true',
+				'layer_target' => $target[ 'url' ]
+			];
+
+		} else {
+			return [
+				'layer' => 'false',
+				'layer_target' => ''
+			];
+		}
+
+	}
+
+	public function getDisabledLayerData() {
+		return [
+			'layer' => 'false',
+			'layer_target' => ''
+		];
+	}
+
+	public function getScriptData( $id ) {
+		$land = $this->getDataById( $id );
+
+		if ( !$land ) { return false; }
+
+		return [
+			'script_active' => $land[ 'script_active' ],
+			'script_country' => $land[ 'script_country' ],
+			'script_sex' => $land[ 'script_sex' ],
+			'script_windows' => $land[ 'script_windows' ],
+			'script_items' => $land[ 'script_items' ],
+		];
+	}
+
+	public function getDisabledScriptData() {
+		return [
+			'script_active' => 'off',
+			'script_country' => '',
+			'script_sex' => '',
+			'script_windows' => '',
+			'script_items' => '',
+		];
+	}
+
 }
