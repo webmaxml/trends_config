@@ -5,11 +5,11 @@ $content = array(
 'name'=>'pushup',
 'title'=>'Крем для упругости бюста PushUp',
 'description'=>'Роскошная грудь, о которой вы всегда мечтали!',
-'price'=>'',
+'price'=>'99',
 'currency'=>'грн',
 'image'=>'3',
 'land'=>'84',
-'stream'=>'',
+'stream'=>'http://alltrends.biz/feed?uid=UYA1A4C6u7nqZIva',
 ],
 [
 'id'=>'5',

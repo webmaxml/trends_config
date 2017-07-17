@@ -80,7 +80,8 @@ class Lands {
 		require 'data/lands.php';
 
 		foreach( $content as $land ) {
-			if ( $land[ 'url' ] === $url ) {
+			if ( $land[ 'url' ] === $url ||
+				 str_replace( 'http://', 'http://www.', $land[ 'url' ] ) === $url ) {
 				return $land;
 			}
 		}

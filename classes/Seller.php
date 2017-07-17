@@ -43,7 +43,7 @@ class Seller {
 		$price_new = $input[ 'price' ];
 		$valuta = $input[ 'currency' ];
 		$skidka = $input[ 'discount' ];
-		$price_old = round( $price_new / ( $skidka * 0.01 ) );
+		$price_old = round( $price_new / ( ( 100 - $skidka ) / 100 ) );
 
 		$utms = [
 			'utm_source' => $input[ 'utm_source' ],

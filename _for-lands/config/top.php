@@ -16,3 +16,10 @@ $controller = new ConfigController();
 $controller->init();
 
 extract( $controller->getTemplateVars() );
+
+// for platform title
+function getTitle( $default ) {
+	global $title;
+
+	return empty( $title ) ? $default : $title;
+}

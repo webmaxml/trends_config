@@ -19,7 +19,6 @@ require 'classes/Seller.php';
 require 'classes/Products.php';
 // controllers
 require 'controllers/FrontController.php';
-require 'controllers/ApiController.php';
 require 'controllers/RequestController.php';
 require 'controllers/ProductsController.php';
 require 'controllers/LandsController.php';
@@ -223,10 +222,6 @@ $router->map( 'POST', '/email-update', function() {
 /**
  * API routes
  */
-
-$router->map( 'GET', '/api', function() {
-	ApiController::getInstance()->getDataForUrl();
-} );
 
 $router->map( 'POST', '/api', function() {
 	RequestController::getInstance()->getData();

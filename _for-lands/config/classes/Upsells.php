@@ -9,13 +9,15 @@ class Upsells {
 	public function init( $data ) {
 		$this->upsells = $data->upsells;
 		$this->hit = $data->hit;
-		$this->query = $data->state === 'config' ? $this->getQuery( 'utm_medium' ) : '';
+
+		$this->query = $data->state === 'config' ? $this->getConfigQuery( 'utm_medium' ) : 
+												   $this->getPlatformQuery();
 
 		$this->setUpsells();
 		$this->addAssets( $data );
 	}
 
-	private function getQuery( $param_name ) {
+	private function getConfigQuery( $param_name ) {
 	    $query = '';
 	    $upsell_from = $_SERVER[ 'HTTP_HOST' ];
 
@@ -39,6 +41,26 @@ class Upsells {
 
 	    return $query;
 	}
+
+	private function getPlatformQuery() {
+		$params = [
+			'utm_source',
+			'utm_campaign',
+			'utm_medium',
+			'utm_content',
+			'utm_term',
+		];
+
+		$query = '';
+		foreach ( $params as $param ) {
+			if ( !empty( $_GET[ $param ] ) ) {
+				$query .= "&{$param}={$_GET[ $param ]}";
+			}
+		}
+
+		return $query;
+	}
+
 
 	public function setUpsells() {
 		ob_start();

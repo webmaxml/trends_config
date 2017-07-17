@@ -89,6 +89,7 @@ class ConfigController {
 			'transit_target' => $this->transit->getUrl(),
 			'hidden_input' => $this->orderForm->getHiddenInput(),
 			// product vars
+			'title' => isset( $data->title ) ? $data->title : '',
 			'product' => isset( $data->product ) ? $data->product : '',
 			'price_new' => round( isset( $data->price1 ) ? $data->price1 : 0 ),
 			'price_2' => round( isset( $data->price2 ) ? $data->price2 : 0 ),
@@ -102,7 +103,7 @@ class ConfigController {
 			'price_10' => round( isset( $data->price10 ) ? $data->price10 : 0 ),
 			'skidka' => isset( $data->discount ) ? $data->discount : 0,
 			'valuta' => isset( $data->currency ) ? $data->currency : '',
-			'price_old' => round( $data->price1 / ( $data->discount * 0.01 ) ),
+			'price_old' => round( $data->price1 / ( ( 100 - $data->discount ) / 100 ) ),
 			// seller
 			'seller' => isset( $data->seller_name ) ? $data->seller_name : '',
 			'seller_adress' => isset( $data->seller_address ) ? $data->seller_address : '',
