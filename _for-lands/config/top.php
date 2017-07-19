@@ -23,3 +23,10 @@ function getTitle( $default ) {
 
 	return empty( $title ) ? $default : $title;
 }
+
+// for additional old prices
+function getOldPrice( $newPrice ) {
+	global $skidka;
+
+	return round( $newPrice / ( ( 100 - $skidka ) / 100 ) );
+}

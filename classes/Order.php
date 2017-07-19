@@ -77,6 +77,13 @@ class Order {
 	}
 
 	public function formOrderPlatformData( $input ) {
+		// while there is no ways to add comments to order
+		if ( isset( $input[ 'comment' ] ) ) {
+			$name = "{$input[ 'name' ]} ( {$input[ 'comment' ]} )";
+		} else {
+			$name = $input[ 'name' ];
+		}
+		
 		$data = [
 			'api_key' => $this->platform->getData()[ 'key' ],
 			'ip' => $input[ 'ip' ],
@@ -89,8 +96,9 @@ class Order {
 			'utm_term' => $input[ 'utm_term' ],
 			'utm_content' => $input[ 'utm_content' ],
 			'utm_campaign' => $input[ 'utm_campaign' ],
-			'name' => $input[ 'name' ],
+			'name' => $name,
 			'phone' => $input[ 'phone' ],
+			'comment' => isset( $input[ 'comment' ] ) ? $input[ 'comment' ] : ''
 		];
 
 		return $data;
