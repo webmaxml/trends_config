@@ -7,21 +7,23 @@ require 'head.php'
 <div>
 	<div class="login_wrapper">
 
-		<? switch ( $_GET[ 'login_status' ] ) { 
-			   case '1': ?>
-				<div class="alert alert-danger alert-dismissible" style="position: absolute; top: -30px; width: 100%">
-					<button type="button" class="close" data-dismiss="alert">
-						<span>&times;</span>
-					</button>
-		 			Невереный логин или пароль!
-				</div>
-				<? break; ?>
-			<? case '2' ?>
-				<!-- for changing password - success -->
-				<? break; ?>
-			<? case '3' ?>
-				<!-- for changing password - failure -->
-				<? break; ?>
+		<? if ( isset( $_GET[ 'login_status' ] ) ) { ?>
+			<? switch ( $_GET[ 'login_status' ] ) { 
+				   case '1': ?>
+					<div class="alert alert-danger alert-dismissible" style="position: absolute; top: -30px; width: 100%">
+						<button type="button" class="close" data-dismiss="alert">
+							<span>&times;</span>
+						</button>
+			 			Невереный логин или пароль!
+					</div>
+					<? break; ?>
+				<? case '2' ?>
+					<!-- for changing password - success -->
+					<? break; ?>
+				<? case '3' ?>
+					<!-- for changing password - failure -->
+					<? break; ?>
+			<? } ?>
 		<? } ?>
 
 		<div class="form login_form">

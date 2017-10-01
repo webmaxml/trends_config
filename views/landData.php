@@ -16,23 +16,25 @@ require 'header.php'
                 <div class="x_content">
 
                     <!-- BEGIN MODALS -->
-                    <? switch ( $_GET[ 'land_status' ] ) { 
-                        case '1': ?>
-                            <div class="alert alert-success alert-dismissible fade in">
-                                <button type="button" class="close" data-dismiss="alert">
-                                    <span>&times;</span>
-                                </button>
-                                Лендинг успешно подключен.
-                            </div>
-                    <? break; ?>
-                    <? case '2' ?>
-                            <div class="alert alert-danger alert-dismissible fade in">
-                                <button type="button" class="close" data-dismiss="alert">
-                                    <span>&times;</span>
-                                </button>
-                                Произошла ошибка при подключении лендинга!
-                            </div>
-                    <? break; ?>
+                    <? if ( isset( $_GET[ 'land_status' ] ) ) { ?>
+                        <? switch ( $_GET[ 'land_status' ] ) { 
+                            case '1': ?>
+                                <div class="alert alert-success alert-dismissible fade in">
+                                    <button type="button" class="close" data-dismiss="alert">
+                                        <span>&times;</span>
+                                    </button>
+                                    Лендинг успешно подключен.
+                                </div>
+                        <? break; ?>
+                        <? case '2' ?>
+                                <div class="alert alert-danger alert-dismissible fade in">
+                                    <button type="button" class="close" data-dismiss="alert">
+                                        <span>&times;</span>
+                                    </button>
+                                    Произошла ошибка при подключении лендинга!
+                                </div>
+                        <? break; ?>
+                        <? } ?>
                     <? } ?>
                     <!-- END MODALS -->
 

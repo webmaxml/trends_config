@@ -16,23 +16,25 @@ require 'header.php'
                 <div class="x_content">
 
                     <!-- BEGIN MODALS -->
-                    <? switch ( $_GET[ 'product_status' ] ) { 
-                        case '1': ?>
-                            <div class="alert alert-success alert-dismissible fade in">
-                                <button type="button" class="close" data-dismiss="alert">
-                                    <span>&times;</span>
-                                </button>
-                                Товар успешно создан.
-                            </div>
-                    <? break; ?>
-                    <? case '2' ?>
-                            <div class="alert alert-danger alert-dismissible fade in">
-                                <button type="button" class="close" data-dismiss="alert">
-                                    <span>&times;</span>
-                                </button>
-                                Произошла ошибка при создании товара!
-                            </div>
-                    <? break; ?>
+                    <? if ( isset( $_GET[ 'product_status' ] ) ) { ?>
+                        <? switch ( $_GET[ 'product_status' ] ) { 
+                            case '1': ?>
+                                <div class="alert alert-success alert-dismissible fade in">
+                                    <button type="button" class="close" data-dismiss="alert">
+                                        <span>&times;</span>
+                                    </button>
+                                    Товар успешно создан.
+                                </div>
+                        <? break; ?>
+                        <? case '2' ?>
+                                <div class="alert alert-danger alert-dismissible fade in">
+                                    <button type="button" class="close" data-dismiss="alert">
+                                        <span>&times;</span>
+                                    </button>
+                                    Произошла ошибка при создании товара!
+                                </div>
+                        <? break; ?>
+                        <? } ?>
                     <? } ?>
                     <!-- END MODALS -->
 
